@@ -198,7 +198,7 @@
                 </div>
             </div>
 
-            <!-- TAB 2: PLANEJAMENTO ANUAL (MODERNIZADO EM CARDS/ACCORDION COM REPLICADOR) -->
+            <!-- TAB 2: PLANEJAMENTO ANUAL -->
             <div id="tab-planejamento" class="tab-content space-y-6">
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-3 gap-3">
@@ -483,7 +483,7 @@
                             <button onclick="toggleTabelaRapida('containerTabelaRapidaMercado')" class="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
                                 <i class="fa-solid fa-table"></i> Lote
                             </button>
-                            <button onclick="openModal('modalItemMercado')" class="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold shadow-sm transition">➕ Item</button>
+                            <button onclick="openModal('modalItemMercado')" class="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1.5 rounded-xl text-xs font-bold transition">➕ Item</button>
                         </div>
                     </div>
 
@@ -1710,7 +1710,7 @@
         };
 
         window.planejamentoMatriz = JSON.parse(localStorage.getItem('planejamentoMatrizV2') || localStorage.getItem('planejamentoMatriz') || '{}');
-        // V2: orçamento separado por ano para evitar que 2025/2026/2027 compartilhem os mesmos valores.
+        
         function normalizarPlanejamento() {
             const keys = Object.keys(window.planejamentoMatriz || {});
             const pareceAntigo = keys.some(k => Array.isArray(window.planejamentoMatriz[k]));
@@ -1721,666 +1721,103 @@
             if (!window.planejamentoMatriz || typeof window.planejamentoMatriz !== 'object') window.planejamentoMatriz = {};
         }
         normalizarPlanejamento();
+
         function getPlanejado(cat, mesIndex, ano) {
             const y = String(ano || document.getElementById('filtroAnoPlanejamento')?.value || '2026');
             if(!window.planejamentoMatriz[y]) window.planejamentoMatriz[y] = {};
-            if(!Array.isArray(window.planejamentoMatriz[y][cat])) window.planejamentoMatriz[y][cat] = Array(12).fill(0);
-            return Number(window.planejamentoMatriz[y][cat][mesIndex]) || 0;
-        }
-        function atualizarPlanejadoMatriz(cat, mesIndex, val) {
-            const ano = document.getElementById('filtroAnoPlanejamento')?.value || '2026';
-            if(!window.planejamentoMatriz[ano]) window.planejamentoMatriz[ano] = {};
-            if(!Array.isArray(window.planejamentoMatriz[ano][cat])) window.planejamentoMatriz[ano][cat] = Array(12).fill(0);
-            window.planejamentoMatriz[ano][cat][mesIndex] = Math.max(0, parseFloat(val) || 0);
-            localStorage.setItem('planejamentoMatrizV2', JSON.stringify(window.planejamentoMatriz));
-            renderPlanejamentoAnualCards(ano);
-        }
-        window.atualizarPlanejadoMatriz = atualizarPlanejadoMatriz;
-
-        // Função do Replicador Rápido (Copiar para o Ano Todo)
-        window.replicarParaTodosMeses = function(cat) {
-            const inputBase = document.getElementById(`replicar_val_${cat}`);
-            const valorBase = parseFloat(inputBase.value);
-            if(isNaN(valorBase)) {
-                alert("Digite um valor válido para replicar.");
-                return;
+            if(!Array.isArray(window.planejamentoMatriz[y][cat])) {
+                window.planejamentoMatriz[y][cat] = new Array(12).fill(0);
             }
-            const ano = document.getElementById('filtroAnoPlanejamento').value;
-            if(!window.planejamentoMatriz[ano]) window.planejamentoMatriz[ano] = {};
-            if(!Array.isArray(window.planejamentoMatriz[ano][cat])) window.planejamentoMatriz[ano][cat] = Array(12).fill(0);
-            for(let i = 0; i < 12; i++) window.planejamentoMatriz[ano][cat][i] = Math.max(0, valorBase);
+            return window.planejamentoMatriz[y][cat][mesIndex] || 0;
+        }
+
+        window.setPlanejado = function(cat, mesIndex, val, ano) {
+            const y = String(ano || document.getElementById('filtroAnoPlanejamento')?.value || '2026');
+            if(!window.planejamentoMatriz[y]) window.planejamentoMatriz[y] = {};
+            if(!Array.isArray(window.planejamentoMatriz[y][cat])) {
+                window.planejamentoMatriz[y][cat] = new Array(12).fill(0);
+            }
+            window.planejamentoMatriz[y][cat][mesIndex] = parseFloat(val) || 0;
             localStorage.setItem('planejamentoMatrizV2', JSON.stringify(window.planejamentoMatriz));
-            renderPlanejamentoAnualCards(ano);
-            alert(`Valor de R$ ${valorBase.toFixed(2)} aplicado em todos os meses para a categoria ${cat}!`);
         };
 
-        window.toggleAccordion = function(catId) {
-            const content = document.getElementById(`accordion_content_${catId}`);
-            const icon = document.getElementById(`accordion_icon_${catId}`);
-            if(content.classList.contains('hidden')) {
-                content.classList.remove('hidden');
-                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-            } else {
-                content.classList.add('hidden');
-                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-            }
+        window.replicarCategoriaAno = function(cat, ano) {
+            const y = String(ano || document.getElementById('filtroAnoPlanejamento')?.value || '2026');
+            if(!window.planejamentoMatriz[y]) window.planejamentoMatriz[y] = {};
+            const primeiroMesVal = window.planejamentoMatriz[y][cat]?.[0] || 0;
+            window.planejamentoMatriz[y][cat] = new Array(12).fill(primeiroMesVal);
+            localStorage.setItem('planejamentoMatrizV2', JSON.stringify(window.planejamentoMatriz));
+            renderPlanejamentoAnualCards(y);
         };
 
-        window.renderPlanejamentoAnualCards = function(ano) {
+        window.renderPlanejamentoAnualCards = function(anoParam) {
+            const ano = anoParam || document.getElementById('filtroAnoPlanejamento')?.value || '2026';
             const container = document.getElementById('listaPlanejamentoCards');
             if(!container) return;
             container.innerHTML = '';
-            const mesesNomes = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-
-            window.configListas.categorias.forEach((cat, index) => {
-                let totalAnual = 0;
-                for(let m = 0; m < 12; m++) {
-                    totalAnual += getPlanejado(cat, m, ano);
-                }
-
-                const cardId = `cat_card_${index}`;
-                const card = document.createElement('div');
-                card.className = "bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden";
+            const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            
+            window.configListas.categorias.forEach((cat, idx) => {
+                const cardId = `plan-card-${idx}`;
+                const div = document.createElement('div');
+                div.className = "border border-slate-200 rounded-2xl bg-white shadow-sm overflow-hidden";
                 
-                let mesesGridHtml = '';
-                for(let m = 0; m < 12; m++) {
-                    const val = getPlanejado(cat, m, ano);
-                    mesesGridHtml += `
-                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex flex-col justify-between">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">${mesesNomes[m]}</span>
-                            <input type="number" step="10" value="${val}" onchange="atualizarPlanejadoMatriz('${cat}', ${m}, this.value)" class="w-full bg-white border border-slate-200 rounded-lg text-center text-xs font-bold p-1 mt-1">
+                let inputsHTML = '';
+                meses.forEach((m, mIdx) => {
+                    const val = getPlanejado(cat, mIdx, ano);
+                    inputsHTML += `
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-slate-500">${m}</label>
+                            <input type="number" step="0.01" value="${val}" onchange="setPlanejado('${cat}', ${mIdx}, this.value, '${ano}')" class="w-full border rounded-xl p-2 text-xs font-bold text-slate-700 bg-slate-50 focus:bg-white">
                         </div>
                     `;
-                }
+                });
 
-                card.innerHTML = `
-                    <div onclick="toggleAccordion('${cardId}')" class="p-4 bg-slate-50/70 hover:bg-slate-100/70 cursor-pointer flex items-center justify-between transition">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-sky-100 text-sky-700 p-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-tag"></i></div>
-                            <div>
-                                <h4 class="font-bold text-slate-800 text-sm">${cat}</h4>
-                                <span class="text-[11px] text-slate-400">Total Anual Planejado: <strong class="text-sky-700">R$ ${totalAnual.toFixed(2)}</strong></span>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="text-xs font-bold text-sky-700 bg-sky-50 border border-sky-200 px-3 py-1 rounded-xl">Expandir Meses</span>
-                            <i id="accordion_icon_${cardId}" class="fa-solid fa-chevron-down text-slate-400"></i>
-                        </div>
-                    </div>
-
-                    <div id="accordion_content_${cardId}" class="hidden p-4 border-t border-slate-100 space-y-4 bg-white">
-                        <!-- BARRA DE REPLICAÇÃO RÁPIDA -->
-                        <div class="p-3 bg-amber-50/60 border border-amber-200/80 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-3">
-                            <div class="text-xs text-amber-900 font-medium">
-                                <i class="fa-solid fa-wand-magic-sparkles text-amber-600"></i> Preenchimento Rápido: Digite um valor base para replicar em todos os meses de ${ano}.
-                            </div>
-                            <div class="flex items-center gap-2 w-full sm:w-auto">
-                                <input type="number" step="10" id="replicar_val_${cat}" placeholder="Ex: 500.00" class="w-28 bg-white border border-amber-300 rounded-xl px-2.5 py-1 text-xs font-bold">
-                                <button onclick="replicarParaTodosMeses('${cat}')" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-3 py-1.5 rounded-xl text-xs shadow-sm transition shrink-0">
-                                    Replicar para o Ano Todo
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- GRID DOS 12 MESES -->
-                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-                            ${mesesGridHtml}
-                        </div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        };
-
-        function salvarConfigCartao(e) {
-            e.preventDefault();
-            const nome = document.getElementById('cfgCartaoNome').value;
-            window.configCartoesLimites[nome] = {
-                limite: parseFloat(document.getElementById('cfgCartaoLimite').value),
-                meta: parseFloat(document.getElementById('cfgCartaoMeta').value),
-                fechamento: parseInt(document.getElementById('cfgCartaoFechamento').value),
-                vencimento: parseInt(document.getElementById('cfgCartaoVencimento').value)
-            };
-            localStorage.setItem('configCartoesLimites', JSON.stringify(window.configCartoesLimites));
-            closeModal('modalConfigCartoes');
-            alert(`Configurações de ${nome} atualizadas!`);
-            renderMatrizParcelamentosGlobal();
-        }
-
-        function salvarListasLocal() {
-            localStorage.setItem('configListas', JSON.stringify(window.configListas));
-            renderDropdownsDynamic();
-        }
-
-        function renderDropdownsDynamic() {
-            document.querySelectorAll('.select-dynamic-categorias').forEach(s => s.innerHTML = window.configListas.categorias.map(c => `<option value="${c}">${c}</option>`).join(''));
-            document.querySelectorAll('.select-dynamic-pagamentos').forEach(s => s.innerHTML = window.configListas.pagamentos.map(p => `<option value="${p}">${p}</option>`).join(''));
-            document.querySelectorAll('.select-dynamic-bancos').forEach(s => s.innerHTML = window.configListas.bancos.map(b => `<option value="${b}">${b}</option>`).join(''));
-            document.querySelectorAll('.select-dynamic-ativos').forEach(s => s.innerHTML = window.configListas.ativos.map(a => `<option value="${a}">${a}</option>`).join(''));
-            document.querySelectorAll('.select-dynamic-metacat').forEach(s => s.innerHTML = window.configListas.metaCategorias.map(m => `<option value="${m}">${m}</option>`).join(''));
-
-            renderConfigUL('categorias', 'listConfigCategorias');
-            renderConfigUL('pagamentos', 'listConfigPagamentos');
-            renderConfigUL('bancos', 'listConfigBancos');
-            renderConfigUL('ativos', 'listConfigAtivos');
-            renderConfigUL('metaCategorias', 'listConfigMetaCat');
-        }
-
-        function renderConfigUL(key, ulId) {
-            const ul = document.getElementById(ulId);
-            if(!ul) return;
-            ul.innerHTML = '';
-            window.configListas[key].forEach((item, index) => {
-                const li = document.createElement('li');
-                li.className = "py-1.5 flex justify-between items-center text-slate-700 font-medium";
-                li.innerHTML = `<span>${item}</span> <button onclick="removeListItem('${key}', ${index})" class="text-rose-500 font-bold hover:text-rose-700">×</button>`;
-                ul.appendChild(li);
-            });
-        }
-
-        function addListItem(key, inputId) {
-            const input = document.getElementById(inputId);
-            const val = input.value.trim();
-            if(val && !window.configListas[key].includes(val)) {
-                window.configListas[key].push(val);
-                input.value = '';
-                salvarListasLocal();
-            }
-        }
-
-        function removeListItem(key, index) { window.configListas[key].splice(index, 1); salvarListasLocal(); }
-
-        window.baixarModeloExcelLancamentos = function() {
-            const data = [
-                ["Data", "Tipo", "Descricao", "Valor", "Categoria", "Pagamento", "Cartao", "TipoCompra", "NumParcelas"],
-                ["2026-09-10", "Despesa", "Supermercado", 350.00, "Mercado", "Pix / Débito", "-", "À vista", 1],
-                ["2026-09-12", "Despesa", "Geladeira Nova", 2400.00, "Moradia/Contas", "Crédito", "Inter Thayna", "Parcelada", 10],
-                ["2026-09-05", "Receita", "Salário", 5000.00, "Salário Thayna", "Pix / Débito", "-", "À vista", 1]
-            ];
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Lancamentos");
-            XLSX.writeFile(wb, "Modelo_Lancamentos_Financas.xlsx");
-        };
-
-        window.baixarModeloExcelMercado = function() {
-            const data = [
-                ["Data", "Produto", "Codigo", "Qtd", "Unidade", "ValorUnitario"],
-                ["2026-09-10", "Arroz 5kg", "789101", 2, "PCT", 28.50],
-                ["2026-09-10", "Leite 1L", "789102", 12, "UN", 4.80],
-                ["2026-09-15", "Café 500g", "789103", 3, "PCT", 16.90]
-            ];
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Mercado");
-            XLSX.writeFile(wb, "Modelo_Mercado_Financas.xlsx");
-        };
-
-        window.importarPlanilhaLancamentosModal = function() {
-            const file = document.getElementById('fileUploadLancamentosModal').files[0];
-            if(!file) { alert("Selecione um arquivo de planilha."); return; }
-            const reader = new FileReader();
-            reader.onload = async function(evt) {
-                try {
-                    const data = new Uint8Array(evt.target.result);
-                    const workbook = XLSX.read(data, {type: 'array'});
-                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const json = XLSX.utils.sheet_to_json(sheet, {defval: ""});
-                    
-                    let count = 0;
-                    for(const row of json) {
-                        const descricao = row.Descricao || row.descricao || row.DESCRIÇÃO || row['Descrição'];
-                        const valor = row.Valor || row.valor || row.VALOR;
-                        if(descricao && valor !== undefined && valor !== "") {
-                            const pag = String(row.Pagamento || row.pagamento || 'Pix / Débito');
-                            const tcompra = String(row.TipoCompra || row.tipoCompra || row['Tipo Compra'] || 'À vista');
-                            const parc = parseInt(row.NumParcelas || row.numParcelas || row['Nº Parcelas'] || 1);
-                            await addDoc(collection(window.firebaseDbInstance, "lancamentos"), {
-                                data: String(row.Data || row.data || new Date().toISOString().split('T')[0]),
-                                tipo: String(row.Tipo || row.tipo || 'Despesa'),
-                                descricao: String(descricao),
-                                valor: parseFloat(valor),
-                                categoria: String(row.Categoria || row.categoria || 'Mercado'),
-                                pagamento: pag,
-                                cartao: String(row.Cartao || row.cartao || '-'),
-                                tipoCompra: tcompra,
-                                numParcelas: parc,
-                                criadoEm: serverTimestamp()
-                            });
-                            count++;
-                        }
-                    }
-                    alert(`Sucesso! ${count} lançamentos importados para o Firebase.`);
-                    closeModal('modalUploadLancamentos');
-                } catch(err) {
-                    console.error(err);
-                    alert("Erro ao processar a planilha. Verifique o formato das colunas.");
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        };
-
-        window.importarExcelMercadoModal = function() {
-            const file = document.getElementById('fileExcelMercadoModal').files[0];
-            if(!file) { alert("Selecione um arquivo de mercado."); return; }
-            const reader = new FileReader();
-            reader.onload = async function(evt) {
-                try {
-                    const data = new Uint8Array(evt.target.result);
-                    const workbook = XLSX.read(data, {type: 'array'});
-                    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const json = XLSX.utils.sheet_to_json(sheet, {defval: ""});
-
-                    let count = 0;
-                    for(const row of json) {
-                        const produto = row.Produto || row.produto || row.PRODUTO;
-                        const valorUnitario = row.ValorUnitario || row.valorUnitario || row['Valor Unitário'];
-                        if(produto && valorUnitario !== undefined) {
-                            await addDoc(collection(window.firebaseDbInstance, "mercado"), {
-                                data: String(row.Data || row.data || new Date().toISOString().split('T')[0]),
-                                produto: String(produto),
-                                codigo: String(row.Codigo || row.codigo || '000'),
-                                qtd: parseInt(row.Qtd || row.qtd || 1),
-                                unidade: String(row.Unidade || row.unidade || 'UN'),
-                                valor: parseFloat(valorUnitario),
-                                criadoEm: serverTimestamp()
-                            });
-                            count++;
-                        }
-                    }
-                    alert(`Sucesso! ${count} itens de mercado importados.`);
-                    closeModal('modalUploadMercado');
-                } catch(err) {
-                    console.error(err);
-                    alert("Erro ao importar planilha de mercado.");
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        };
-
-        window.renderMatrizParcelamentosGlobal = function() {
-            if (window.cacheParcelamentos && window.cacheGastosCartao) {
-                renderMatrizParcelamentos(window.cacheParcelamentos, window.cacheGastosCartao);
-            }
-        };
-
-        function renderMatrizParcelamentos(parcelas, gastosCartaoMap) {
-            window.cacheParcelamentos = parcelas;
-            window.cacheGastosCartao = gastosCartaoMap;
-
-            const cardsContainer = document.getElementById('cardsCartoesComLimite');
-            if(!cardsContainer) return;
-            cardsContainer.innerHTML = '';
-
-            for(const [cartao, cfg] of Object.entries(window.configCartoesLimites)) {
-                const gasto = gastosCartaoMap[cartao] || 0;
-                const disponivel = Math.max(0, cfg.limite - gasto);
-                const pctGastoMeta = cfg.meta > 0 ? Math.min(100, ((gasto / cfg.meta) * 100)).toFixed(0) : 0;
-
-                const div = document.createElement('div');
-                div.className = "p-5 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-3";
                 div.innerHTML = `
-                    <div class="flex justify-between items-center">
-                        <strong class="text-slate-800 text-sm flex items-center gap-2"><i class="fa-solid fa-credit-card text-sky-600"></i> ${cartao}</strong>
-                        <span class="bg-sky-50 text-sky-800 text-[10px] font-bold px-2.5 py-1 rounded-xl border border-sky-200">Fecha ${cfg.fechamento} | Vence ${cfg.vencimento}</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-2 py-1 text-xs border-y border-slate-100">
-                        <div><span class="text-slate-400 block font-bold text-[9px] uppercase">Gasto</span><span class="font-bold text-slate-800 text-sm">R$ ${gasto.toFixed(2)}</span></div>
-                        <div><span class="text-slate-400 block font-bold text-[9px] uppercase">Meta</span><span class="font-bold text-slate-700 text-sm">R$ ${cfg.meta.toFixed(2)}</span></div>
-                        <div><span class="text-slate-400 block font-bold text-[9px] uppercase">Livre</span><span class="font-bold text-sky-700 text-sm">R$ ${disponivel.toFixed(2)}</span></div>
-                    </div>
-                    <div class="space-y-1">
-                        <div class="flex justify-between text-[10px] font-bold">
-                            <span class="text-slate-400">Uso da Meta: ${pctGastoMeta}%</span>
-                            <span class="${pctGastoMeta > 100 ? 'text-rose-600' : 'text-emerald-700'}">${pctGastoMeta > 100 ? '⚠️ Acima da Meta' : '🟢 Na Meta'}</span>
+                    <div class="p-4 bg-slate-50 border-b border-slate-100 flex items-center justify-between cursor-pointer" onclick="document.getElementById('${cardId}').classList.toggle('hidden')">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-folder-open text-sky-600"></i>
+                            <span class="font-bold text-slate-800 text-xs">${cat}</span>
                         </div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                            <div class="${pctGastoMeta > 100 ? 'bg-rose-500' : 'bg-sky-500'} h-2 rounded-full" style="width: ${Math.min(100, pctGastoMeta)}%"></div>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="event.stopPropagation(); replicarCategoriaAno('${cat}', '${ano}')" class="text-[10px] bg-sky-100 text-sky-700 font-bold px-2.5 py-1 rounded-xl border border-sky-200 hover:bg-sky-200 transition">Replicar Janeiro p/ Ano Todo</button>
+                            <i class="fa-solid fa-chevron-down text-slate-400 text-xs"></i>
                         </div>
                     </div>
+                    <div id="${cardId}" class="p-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 hidden">
+                        ${inputsHTML}
+                    </div>
                 `;
-                cardsContainer.appendChild(div);
-            }
-
-            const tbody = document.getElementById('listaMatrizParcelamentos');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-
-            if(parcelas.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="19" class="py-4 text-center text-slate-400">Nenhum parcelamento ativo encontrado. Cadastre uma compra com mais de 1 parcela no cartão.</td></tr>';
-                return;
-            }
-
-            const anoBase = parseInt(document.getElementById('filtroAnoParcelamentos')?.value || '2026', 10);
-
-            parcelas.forEach(p => {
-                const totalRestante = p.valor * p.numParcelas;
-                const dataInicio = p.data ? new Date(p.data + 'T00:00:00') : new Date();
-                const startYear = dataInicio.getFullYear();
-                const startMonth = dataInicio.getMonth();
-                const totalParc = p.numParcelas || 1;
-
-                const tr = document.createElement('tr');
-                let colsHtml = `
-                    <td class="py-2.5 font-bold text-slate-800">${p.descricao}</td>
-                    <td class="py-2.5"><span class="bg-sky-50 text-sky-800 px-2.5 py-0.5 rounded-xl text-[10px] font-bold border border-sky-200">${p.cartao}</span></td>
-                    <td class="py-2.5 text-center font-bold text-sky-800">${totalParc}x</td>
-                    <td class="py-2.5 text-right font-bold text-slate-800">R$ ${p.valor.toFixed(2)}</td>
-                    <td class="py-2.5 text-right font-bold text-sky-800">R$ ${totalRestante.toFixed(2)}</td>
-                `;
-
-                for(let m = 0; m < 12; m++) {
-                    let temParcelaNesteMes = false;
-                    for(let i = 0; i < totalParc; i++) {
-                        const instDate = new Date(startYear, startMonth + i, 1);
-                        if(instDate.getFullYear() === anoBase && instDate.getMonth() === m) {
-                            temParcelaNesteMes = true;
-                            break;
-                        }
-                    }
-
-                    if(temParcelaNesteMes) {
-                        colsHtml += `<td class="py-2.5 text-center font-bold text-slate-700">R$ ${p.valor.toFixed(2)}</td>`;
-                    } else {
-                        colsHtml += `<td class="py-2.5 text-center text-slate-300">-</td>`;
-                    }
-                }
-
-                colsHtml += `
-                    <td class="py-2.5 text-center"><span class="bg-amber-50 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px] border border-amber-200">Em Andamento</span></td>
-                    <td class="py-2.5 text-center">
-                        <button onclick="excluirLancamento('${p.id}')" class="text-rose-500 font-bold"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                `;
-                tr.innerHTML = colsHtml;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function renderPlanVsReal(catMap) {
-            const tbody = document.getElementById('listaPlanVsRealTabela');
-            if(!tbody) return;
-            tbody.innerHTML = '';
-
-            const periodo = document.getElementById('filtroMesPlanReal').value;
-            const mesIndex = parseInt(periodo.split('-')[1], 10) - 1;
-
-            window.configListas.categorias.forEach(cat => {
-                const planejado = getPlanejado(cat, mesIndex);
-                const realizado = catMap[cat] || 0;
-                const diff = planejado - realizado;
-                const dentro = diff >= 0;
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="py-2.5 font-bold text-slate-800">${cat}</td>
-                    <td class="py-2.5 text-right text-slate-600">R$ ${planejado.toFixed(2)}</td>
-                    <td class="py-2.5 text-right font-bold text-slate-800">R$ ${realizado.toFixed(2)}</td>
-                    <td class="py-2.5 text-right font-bold ${dentro ? 'text-emerald-700' : 'text-rose-600'}">
-                        ${dentro ? '+' : ''} R$ ${diff.toFixed(2)}
-                    </td>
-                    <td class="py-2.5 text-center font-bold text-[10px]">
-                        ${dentro ? '<span class="bg-emerald-50 text-emerald-800 px-2.5 py-1 rounded-xl border border-emerald-200">🟢 Dentro da Meta</span>' : '<span class="bg-rose-50 text-rose-800 px-2.5 py-1 rounded-xl border border-rose-200">🔴 Ultrapassou</span>'}
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function renderDashboardInsights(entradas, gastos, pctComprometida, catMap) {
-            const container = document.getElementById('listaInsightsDashboard');
-            if(!container) return;
-            container.innerHTML = '';
-
-            const insights = [];
-            if(pctComprometida > 80) {
-                insights.push(`⚠️ Atenção: Você já comprometeu <strong>${pctComprometida}%</strong> da sua renda mensal. É recomendável segurar os gastos.`);
-            } else {
-                insights.push(`🟢 Suas finanças estão saudáveis. Você comprometeu apenas <strong>${pctComprometida}%</strong> da renda.`);
-            }
-
-            let maiorCat = 'Nenhuma';
-            let maiorVal = 0;
-            for(const [cat, val] of Object.entries(catMap)) {
-                if(val > maiorVal) { maiorVal = val; maiorCat = cat; }
-            }
-            if(maiorVal > 0) {
-                insights.push(`📊 A categoria com maior peso no mês é <strong>${maiorCat}</strong>, totalizando R$ ${maiorVal.toFixed(2)}.`);
-            }
-
-            insights.forEach(text => {
-                const div = document.createElement('div');
-                div.className = "p-3 bg-white border border-amber-200/60 rounded-xl text-slate-700 leading-relaxed shadow-sm";
-                div.innerHTML = text;
                 container.appendChild(div);
             });
-        }
-
-        let chartPizza = null;
-        let chartBarra = null;
-        let chartEvolucao = null;
-        let chartFluxo = null;
-
-        function renderCharts(entradas, saidas, catMap, historicoMensal, fluxoPagamentos) {
-            const ctxPizza = document.getElementById('chartPizzaCategorias')?.getContext('2d');
-            if(!ctxPizza) return;
-            if (chartPizza) chartPizza.destroy();
-
-            const labels = Object.keys(catMap);
-            const data = Object.values(catMap);
-            const totalCat = data.reduce((a, b) => a + b, 0);
-            const pastelColors = ['#38bdf8', '#34d399', '#fbbf24', '#f87171', '#a78bfa', '#f472b6', '#94a3b8', '#60a5fa'];
-
-            chartPizza = new Chart(ctxPizza, {
-                type: 'doughnut',
-                data: {
-                    labels: labels.length ? labels : ['Sem dados'],
-                    datasets: [{
-                        data: data.length ? data : [1],
-                        backgroundColor: pastelColors,
-                        borderWidth: 2,
-                        borderColor: '#ffffff'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    const val = context.raw;
-                                    const pct = totalCat > 0 ? ((val / totalCat) * 100).toFixed(1) : 0;
-                                    return ` R$ ${val.toFixed(2)} (${pct}%)`;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-
-            const ctxBarra = document.getElementById('chartBarraEntradasSaidas').getContext('2d');
-            if (chartBarra) chartBarra.destroy();
-
-            chartBarra = new Chart(ctxBarra, {
-                type: 'bar',
-                data: {
-                    labels: ['Entradas', 'Saídas'],
-                    datasets: [{
-                        label: 'R$',
-                        data: [entradas, saidas],
-                        backgroundColor: ['#34d399', '#f87171'],
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
-                }
-            });
-
-            const ctxEvolucao = document.getElementById('chartEvolucaoSaldo').getContext('2d');
-            if(chartEvolucao) chartEvolucao.destroy();
-
-            const mesesOrd = Object.keys(historicoMensal).sort();
-            const saldosAcumulados = [];
-            let acumulado = 0;
-            mesesOrd.forEach(m => {
-                acumulado += (historicoMensal[m].entradas - historicoMensal[m].saidas);
-                saldosAcumulados.push(acumulado);
-            });
-
-            chartEvolucao = new Chart(ctxEvolucao, {
-                type: 'line',
-                data: {
-                    labels: mesesOrd.length ? mesesOrd : ['Atual'],
-                    datasets: [{
-                        label: 'Saldo Acumulado (R$)',
-                        data: saldosAcumulados.length ? saldosAcumulados : [0],
-                        borderColor: '#0284c7',
-                        backgroundColor: 'rgba(224, 242, 254, 0.4)',
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
-                }
-            });
-
-            const ctxFluxo = document.getElementById('chartFluxoPagamentos').getContext('2d');
-            if(chartFluxo) chartFluxo.destroy();
-
-            chartFluxo = new Chart(ctxFluxo, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(fluxoPagamentos).length ? Object.keys(fluxoPagamentos) : ['Sem dados'],
-                    datasets: [{
-                        data: Object.values(fluxoPagamentos).length ? Object.values(fluxoPagamentos) : [1],
-                        backgroundColor: ['#60a5fa', '#34d399', '#fbbF24', '#f472b6']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { boxWidth: 10 } } }
-                }
-            });
-        }
+        };
 
         window.switchTab = function(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById('tab-' + tabId).classList.add('active');
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('bg-sky-50', 'text-sky-700', 'font-bold'));
-            const dBtn = document.getElementById('btn-' + tabId);
-            if(dBtn) dBtn.classList.add('bg-sky-50', 'text-sky-700', 'font-bold');
-        };
-
-        window.openModal = function(id) { document.getElementById(id).classList.remove('hidden'); };
-        window.closeModal = function(id) { document.getElementById(id).classList.add('hidden'); };
-
-        window.toggleCartaoModal = function() {
-            const val = document.getElementById('pagamentoInput').value;
-            document.getElementById('boxCartaoModal').classList.toggle('hidden', val !== 'Crédito');
-        };
-
-        window.toggleParcelasBox = function() {
-            const val = document.getElementById('tipoCompraInput').value;
-            document.getElementById('boxNumParcelas').classList.toggle('hidden', val !== 'Parcelada');
-        };
-
-        window.setVisaoMetas = function(tipo) {
-            if(tipo === 'tabela') {
-                document.getElementById('visaoMetaTabela').classList.remove('hidden');
-                document.getElementById('visaoMetaGaleria').classList.add('hidden');
-                document.getElementById('btnMetaTabela').className = "px-3 py-1 rounded-lg font-bold bg-white text-slate-800 shadow-sm";
-                document.getElementById('btnMetaGaleria').className = "px-3 py-1 rounded-lg font-bold text-slate-500";
-            } else {
-                document.getElementById('visaoMetaTabela').classList.add('hidden');
-                document.getElementById('visaoMetaGaleria').classList.remove('hidden');
-                document.getElementById('btnMetaGaleria').className = "px-3 py-1 rounded-lg font-bold bg-white text-slate-800 shadow-sm";
-                document.getElementById('btnMetaTabela').className = "px-3 py-1 rounded-lg font-bold text-slate-500";
-            }
-        };
-
-        window.renderMetas = function() {
-            const ano = document.getElementById('filtroAnoMeta').value;
-            const metas = (window.metasCache || []).filter(m => m.ano === ano);
-            const tbody = document.getElementById('listaMetasTabela');
-            const galeria = document.getElementById('visaoMetaGaleria');
-            if(!tbody || !galeria) return;
-            tbody.innerHTML = '';
-            galeria.innerHTML = '';
-
-            if(metas.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="py-4 text-center text-slate-400">Nenhuma meta cadastrada para este ano.</td></tr>';
-                galeria.innerHTML = '<div class="col-span-3 text-center text-slate-400 py-4">Nenhuma meta cadastrada.</div>';
-                return;
-            }
-
-            metas.forEach(m => {
-                const pct = m.alvo > 0 ? Math.min(100, Math.round((m.realizado / m.alvo) * 100)) : 0;
-                
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="py-2.5">
-                        <div class="flex items-center gap-2">
-                            <span class="font-bold w-7 text-right">${pct}%</span>
-                            <div class="w-16 bg-slate-100 h-2 rounded-full overflow-hidden">
-                                <div class="bg-sky-500 h-2 rounded-full" style="width: ${pct}%"></div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="py-2.5 font-bold text-slate-800">${m.nome}</td>
-                    <td class="py-2.5 text-center font-bold text-slate-700">${m.realizado}</td>
-                    <td class="py-2.5 text-center text-slate-400">${m.alvo}</td>
-                    <td class="py-2.5"><span class="bg-sky-50 text-sky-800 px-2.5 py-0.5 rounded-xl font-bold text-[10px] border border-sky-200">${m.categoria}</span></td>
-                    <td class="py-2.5 text-slate-500">${m.recompensa}</td>
-                    <td class="py-2.5 text-center space-x-1">
-                        <button onclick='carregarMetaEdicao(${JSON.stringify(m)}, "${m.id}")' class="text-sky-600 font-bold"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="excluirMeta('${m.id}')" class="text-rose-500 font-bold"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-
-                const card = document.createElement('div');
-                card.className = "bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3";
-                card.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <strong class="text-slate-800 text-sm">${m.nome}</strong>
-                        <span class="bg-sky-50 text-sky-800 font-bold px-2 py-0.5 rounded text-[10px] border border-sky-200">${m.categoria}</span>
-                    </div>
-                    <div class="space-y-1">
-                        <div class="flex justify-between text-xs font-bold text-slate-500">
-                            <span>Progresso: ${pct}%</span>
-                            <span>${m.realizado} / ${m.alvo}</span>
-                        </div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                            <div class="bg-sky-500 h-2 rounded-full" style="width: ${pct}%"></div>
-                        </div>
-                    </div>
-                    <p class="text-slate-500 text-[11px]">🎁 Recompensa: ${m.recompensa}</p>
-                    <div class="flex justify-end gap-2 pt-2 border-t">
-                        <button onclick='carregarMetaEdicao(${JSON.stringify(m)}, "${m.id}")' class="text-sky-600 text-xs font-bold"><i class="fa-solid fa-pen"></i> Editar</button>
-                        <button onclick="excluirMeta('${m.id}')" class="text-rose-500 text-xs font-bold"><i class="fa-solid fa-trash"></i> Excluir</button>
-                    </div>
-                `;
-                galeria.appendChild(card);
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('bg-sky-50', 'text-sky-700', 'font-bold');
             });
+            document.getElementById('tab-' + tabId)?.classList.add('active');
+            document.getElementById('btn-' + tabId)?.classList.add('bg-sky-50', 'text-sky-700', 'font-bold');
         };
+
+        window.openModal = function(id) { document.getElementById(id)?.classList.remove('hidden'); };
+        window.closeModal = function(id) { document.getElementById(id)?.classList.add('hidden'); };
 
         window.toggleTabelaRapida = function(id) {
             const el = document.getElementById(id);
-            el.classList.toggle('hidden');
-            if(!el.classList.contains('hidden') && id === 'containerTabelaRapidaLanc') {
-                if(document.getElementById('tbodyTabelaRapidaLanc').children.length === 0) addLinhaTabelaLanc();
-            }
-            if(!el.classList.contains('hidden') && id === 'containerTabelaRapidaMercado') {
-                if(document.getElementById('tbodyTabelaRapidaMercado').children.length === 0) addLinhaTabelaMercado();
+            if(el) {
+                el.classList.toggle('hidden');
+                if(!el.classList.contains('hidden') && id === 'containerTabelaRapidaLanc') {
+                    if(document.getElementById('tbodyTabelaRapidaLanc').children.length === 0) {
+                        addLinhaTabelaLanc();
+                    }
+                }
+                if(!el.classList.contains('hidden') && id === 'containerTabelaRapidaMercado') {
+                    if(document.getElementById('tbodyTabelaRapidaMercado').children.length === 0) {
+                        addLinhaTabelaMercado();
+                    }
+                }
             }
         };
 
@@ -2388,19 +1825,19 @@
             const tbody = document.getElementById('tbodyTabelaRapidaLanc');
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td class="p-1"><input type="date" value="${new Date().toISOString().split('T')[0]}" class="row-data border rounded p-1 text-xs"></td>
+                <td class="p-1"><input type="date" value="${new Date().toISOString().split('T')[0]}" class="row-data border rounded p-1 w-28 text-xs"></td>
                 <td class="p-1"><select class="row-tipo border rounded p-1 text-xs"><option value="Despesa">Despesa</option><option value="Receita">Receita</option></select></td>
-                <td class="p-1"><input type="text" placeholder="Descrição" class="row-desc border rounded p-1 text-xs w-28"></td>
-                <td class="p-1"><input type="number" step="0.01" placeholder="0.00" class="row-valor border rounded p-1 text-xs w-20 font-bold"></td>
+                <td class="p-1"><input type="text" placeholder="Descrição" class="row-desc border rounded p-1 w-full text-xs"></td>
+                <td class="p-1"><input type="number" step="0.01" placeholder="0.00" class="row-valor border rounded p-1 w-20 text-xs"></td>
                 <td class="p-1"><select class="row-cat border rounded p-1 text-xs select-dynamic-categorias"></select></td>
-                <td class="p-1"><select class="row-pag border rounded p-1 text-xs select-dynamic-pagamentos"></select></td>
-                <td class="p-1"><select class="row-cartao border rounded p-1 text-xs select-dynamic-bancos"></select></td>
+                <td class="p-1"><select class="row-pag border rounded p-1 text-xs select-dynamic-pagamentos" onchange="this.closest('tr').querySelector('.row-cartao').disabled = (this.value !== 'Crédito')"></select></td>
+                <td class="p-1"><select class="row-cartao border rounded p-1 text-xs select-dynamic-bancos" disabled></select></td>
                 <td class="p-1"><select class="row-tcompra border rounded p-1 text-xs"><option value="À vista">À vista</option><option value="Parcelada">Parcelada</option></select></td>
-                <td class="p-1"><input type="number" value="1" min="1" class="row-parc border rounded p-1 text-xs w-12 font-bold"></td>
-                <td class="p-1 text-center"><button onclick="this.closest('tr').remove()" class="text-rose-500 font-bold">×</button></td>
+                <td class="p-1"><input type="number" value="1" min="1" class="row-parc border rounded p-1 w-12 text-xs"></td>
+                <td class="p-1 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 font-bold"><i class="fa-solid fa-trash"></i></button></td>
             `;
             tbody.appendChild(tr);
-            renderDropdownsDynamic();
+            atualizarSelectsDinamicos();
         };
 
         window.addLinhaTabelaMercado = function() {
@@ -2408,12 +1845,12 @@
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td class="p-1"><input type="date" value="${new Date().toISOString().split('T')[0]}" class="merc-data border rounded p-1 text-xs"></td>
-                <td class="p-1"><input type="text" placeholder="Produto" class="merc-prod border rounded p-1 text-xs w-32"></td>
-                <td class="p-1"><input type="text" placeholder="Código" class="merc-cod border rounded p-1 text-xs w-20"></td>
-                <td class="p-1"><input type="number" value="1" min="1" class="merc-qtd border rounded p-1 text-xs w-12 font-bold"></td>
-                <td class="merc-un p-1"><select class="border rounded p-1 text-xs"><option value="UN">UN</option><option value="KG">KG</option><option value="L">L</option><option value="PCT">PCT</option></select></td>
-                <td class="p-1"><input type="number" step="0.01" placeholder="0.00" class="merc-val border rounded p-1 text-xs w-20 font-bold"></td>
-                <td class="p-1 text-center"><button onclick="this.closest('tr').remove()" class="text-rose-500 font-bold">×</button></td>
+                <td class="p-1"><input type="text" placeholder="Produto" class="merc-prod border rounded p-1 w-full text-xs"></td>
+                <td class="p-1"><input type="text" placeholder="Código" class="merc-cod border rounded p-1 w-20 text-xs"></td>
+                <td class="p-1"><input type="number" value="1" min="1" class="merc-qtd border rounded p-1 w-12 text-xs"></td>
+                <td class="p-1"><select class="merc-un border rounded p-1 text-xs"><option value="UN">UN</option><option value="KG">KG</option><option value="L">L</option><option value="PCT">PCT</option><option value="CX">CX</option></select></td>
+                <td class="p-1"><input type="number" step="0.01" placeholder="0.00" class="merc-vlr border rounded p-1 w-20 text-xs"></td>
+                <td class="p-1 text-center"><button type="button" onclick="this.closest('tr').remove()" class="text-rose-500 font-bold"><i class="fa-solid fa-trash"></i></button></td>
             `;
             tbody.appendChild(tr);
         };
@@ -2423,17 +1860,17 @@
             let count = 0;
             for(const tr of rows) {
                 const prod = tr.querySelector('.merc-prod').value;
-                const val = parseFloat(tr.querySelector('.merc-val').value);
-                if(prod && !isNaN(val)) {
-                    await addDoc(collection(window.firebaseDbInstance, "mercado"), {
+                const vlr = parseFloat(tr.querySelector('.merc-vlr').value);
+                if(prod && !isNaN(vlr)) {
+                    await window.firebaseDbInstance ? addDoc(collection(window.firebaseDbInstance, "mercado"), {
                         data: tr.querySelector('.merc-data').value,
                         produto: prod,
-                        codigo: tr.querySelector('.merc-cod').value || '789000',
+                        codigo: tr.querySelector('.merc-cod').value,
                         qtd: parseInt(tr.querySelector('.merc-qtd').value) || 1,
-                        unidade: tr.querySelector('.merc-un select')?.value || 'UN',
-                        valor: val,
+                        unidade: tr.querySelector('.merc-un').value,
+                        valor: vlr,
                         criadoEm: serverTimestamp()
-                    });
+                    }) : null;
                     count++;
                 }
             }
@@ -2443,95 +1880,422 @@
             }
         };
 
-        window.onload = function() {
-            renderDropdownsDynamic();
-            renderPlanejamentoAnualCards('2026');
-            renderRecorrentesCards();
+        window.atualizarSelectsDinamicos = function() {
+            const categorias = window.configListas.categorias || [];
+            const pagamentos = window.configListas.pagamentos || [];
+            const bancos = window.configListas.bancos || [];
+            const ativos = window.configListas.ativos || [];
+            const metaCats = window.configListas.metaCategorias || [];
+
+            document.querySelectorAll('.select-dynamic-categorias').forEach(sel => {
+                const val = sel.value;
+                sel.innerHTML = categorias.map(c => `<option value="${c}">${c}</option>`).join('');
+                if(val) sel.value = val;
+            });
+            document.querySelectorAll('.select-dynamic-pagamentos').forEach(sel => {
+                const val = sel.value;
+                sel.innerHTML = pagamentos.map(p => `<option value="${p}">${p}</option>`).join('');
+                if(val) sel.value = val;
+            });
+            document.querySelectorAll('.select-dynamic-bancos').forEach(sel => {
+                const val = sel.value;
+                sel.innerHTML = bancos.map(b => `<option value="${b}">${b}</option>`).join('');
+                if(val) sel.value = val;
+            });
+            document.querySelectorAll('.select-dynamic-ativos').forEach(sel => {
+                const val = sel.value;
+                sel.innerHTML = ativos.map(a => `<option value="${a}">${a}</option>`).join('');
+                if(val) sel.value = val;
+            });
+            document.querySelectorAll('.select-dynamic-metacat').forEach(sel => {
+                const val = sel.value;
+                sel.innerHTML = metaCats.map(m => `<option value="${m}">${m}</option>`).join('');
+                if(val) sel.value = val;
+            });
+
+            renderConfigListUI('categorias', 'listConfigCategorias');
+            renderConfigListUI('pagamentos', 'listConfigPagamentos');
+            renderConfigListUI('bancos', 'listConfigBancos');
+            renderConfigListUI('ativos', 'listConfigAtivos');
+            renderConfigListUI('metaCategorias', 'listConfigMetaCat');
         };
+
+        window.renderConfigListUI = function(tipo, elementId) {
+            const ul = document.getElementById(elementId);
+            if(!ul) return;
+            ul.innerHTML = '';
+            (window.configListas[tipo] || []).forEach((item, idx) => {
+                const li = document.createElement('li');
+                li.className = "flex justify-between items-center py-1 text-slate-700";
+                li.innerHTML = `
+                    <span>${item}</span>
+                    <button onclick="removeListItem('${tipo}', ${idx})" class="text-rose-500 hover:text-rose-700"><i class="fa-solid fa-trash text-xs"></i></button>
+                `;
+                ul.appendChild(li);
+            });
+        };
+
+        window.addListItem = function(tipo, inputId) {
+            const val = document.getElementById(inputId).value.trim();
+            if(val) {
+                if(!window.configListas[tipo]) window.configListas[tipo] = [];
+                window.configListas[tipo].push(val);
+                localStorage.setItem('configListas', JSON.stringify(window.configListas));
+                document.getElementById(inputId).value = '';
+                atualizarSelectsDinamicos();
+            }
+        };
+
+        window.removeListItem = function(tipo, idx) {
+            window.configListas[tipo].splice(idx, 1);
+            localStorage.setItem('configListas', JSON.stringify(window.configListas));
+            atualizarSelectsDinamicos();
+        };
+
+        window.toggleCartaoModal = function() {
+            const pag = document.getElementById('pagamentoInput').value;
+            const box = document.getElementById('boxCartaoModal');
+            if(pag === 'Crédito') box.classList.remove('hidden');
+            else box.classList.add('hidden');
+        };
+
+        window.toggleParcelasBox = function() {
+            const tipo = document.getElementById('tipoCompraInput').value;
+            const box = document.getElementById('boxNumParcelas');
+            if(tipo === 'Parcelada') box.classList.remove('hidden');
+            else box.classList.add('hidden');
+        };
+
+        window.baixarModeloExcelLancamentos = function() {
+            const ws = XLSX.utils.json_to_sheet([
+                { Data: "2026-09-01", Tipo: "Despesa", Descricao: "Supermercado", Valor: 150.50, Categoria: "Mercado", Pagamento: "Crédito", Cartao: "Inter Thayna", TipoCompra: "À vista", NumParcelas: 1 }
+            ]);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Lancamentos");
+            XLSX.writeFile(wb, "Modelo_Lancamentos.xlsx");
+        };
+
+        window.baixarModeloExcelMercado = function() {
+            const ws = XLSX.utils.json_to_sheet([
+                { Data: "2026-09-01", Produto: "Arroz 5kg", Codigo: "789102", Qtd: 1, Unidade: "UN", ValorUnitario: 29.90 }
+            ]);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Mercado");
+            XLSX.writeFile(wb, "Modelo_Mercado.xlsx");
+        };
+
+        window.importarPlanilhaLancamentosModal = function() {
+            const fileInput = document.getElementById('fileUploadLancamentosModal');
+            if(!fileInput.files[0]) { alert("Selecione um arquivo primeiro."); return; }
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    const firstSheet = workbook.SheetNames[0];
+                    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet]);
+                    let count = 0;
+                    for(const r of rows) {
+                        await addDoc(collection(window.firebaseDbInstance, "lancamentos"), {
+                            data: r.Data || new Date().toISOString().split('T')[0],
+                            tipo: r.Tipo || 'Despesa',
+                            descricao: r.Descricao || 'Importado',
+                            valor: parseFloat(r.Valor) || 0,
+                            categoria: r.Categoria || 'Mercado',
+                            pagamento: r.Pagamento || 'Pix / Débito',
+                            cartao: r.Cartao || '-',
+                            tipoCompra: r.TipoCompra || 'À vista',
+                            numParcelas: parseInt(r.NumParcelas) || 1,
+                            criadoEm: serverTimestamp()
+                        });
+                        count++;
+                    }
+                    alert(`${count} lançamentos importados com sucesso!`);
+                    closeModal('modalUploadLancamentos');
+                } catch(err) {
+                    alert("Erro ao importar planilha: " + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(fileInput.files[0]);
+        };
+
+        window.importarExcelMercadoModal = function() {
+            const fileInput = document.getElementById('fileExcelMercadoModal');
+            if(!fileInput.files[0]) { alert("Selecione um arquivo primeiro."); return; }
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    const firstSheet = workbook.SheetNames[0];
+                    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[firstSheet]);
+                    let count = 0;
+                    for(const r of rows) {
+                        await addDoc(collection(window.firebaseDbInstance, "mercado"), {
+                            data: r.Data || new Date().toISOString().split('T')[0],
+                            produto: r.Produto || 'Produto',
+                            codigo: r.Codigo || '',
+                            qtd: parseInt(r.Qtd) || 1,
+                            unidade: r.Unidade || 'UN',
+                            valor: parseFloat(r.ValorUnitario || r.Valor) || 0,
+                            criadoEm: serverTimestamp()
+                        });
+                        count++;
+                    }
+                    alert(`${count} itens de mercado importados com sucesso!`);
+                    closeModal('modalUploadMercado');
+                } catch(err) {
+                    alert("Erro ao importar mercado: " + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(fileInput.files[0]);
+        };
+
+        let chartPizza = null, chartBarra = null, chartEvolucao = null, chartFluxo = null;
+        function renderCharts(totalE, totalG, catMap, historicoMensal, fluxoPagamentos) {
+            const ctxPizza = document.getElementById('chartPizzaCategorias')?.getContext('2d');
+            if(ctxPizza) {
+                if(chartPizza) chartPizza.destroy();
+                const labels = Object.keys(catMap);
+                const data = Object.values(catMap);
+                chartPizza = new Chart(ctxPizza, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{ data: data, backgroundColor: ['#0284c7', '#059669', '#d97706', '#e11d48', '#8b5cf6', '#ec4899', '#14b8a6', '#f59e0b'] }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }
+                });
+            }
+
+            const ctxBarra = document.getElementById('chartBarraEntradasSaidas')?.getContext('2d');
+            if(ctxBarra) {
+                if(chartBarra) chartBarra.destroy();
+                const meses = Object.keys(historicoMensal).sort();
+                const ent = meses.map(m => historicoMensal[m].entradas);
+                const sai = meses.map(m => historicoMensal[m].saidas);
+                chartBarra = new Chart(ctxBarra, {
+                    type: 'bar',
+                    data: {
+                        labels: meses,
+                        datasets: [
+                            { label: 'Entradas', data: ent, backgroundColor: '#059669' },
+                            { label: 'Saídas', data: sai, backgroundColor: '#e11d48' }
+                        ]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }
+                });
+            }
+
+            const ctxEvolucao = document.getElementById('chartEvolucaoSaldo')?.getContext('2d');
+            if(ctxEvolucao) {
+                if(chartEvolucao) chartEvolucao.destroy();
+                const meses = Object.keys(historicoMensal).sort();
+                let acumulado = 0;
+                const saldos = meses.map(m => {
+                    acumulado += (historicoMensal[m].entradas - historicoMensal[m].saidas);
+                    return acumulado;
+                });
+                chartEvolucao = new Chart(ctxEvolucao, {
+                    type: 'line',
+                    data: {
+                        labels: meses,
+                        datasets: [{ label: 'Saldo Acumulado', data: saldos, borderColor: '#0284c7', backgroundColor: 'rgba(2, 132, 199, 0.1)', fill: true, tension: 0.3 }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }
+                });
+            }
+
+            const ctxFluxo = document.getElementById('chartFluxoPagamentos')?.getContext('2d');
+            if(ctxFluxo) {
+                if(chartFluxo) chartFluxo.destroy();
+                const labels = Object.keys(fluxoPagamentos);
+                const data = Object.values(fluxoPagamentos);
+                chartFluxo = new Chart(ctxFluxo, {
+                    type: 'pie',
+                    data: {
+                        labels: labels,
+                        datasets: [{ data: data, backgroundColor: ['#f59e0b', '#0284c7', '#10b981', '#6366f1'] }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }
+                });
+            }
+        }
+
+        function renderMatrizParcelamentos(parcelamentos, gastosCartao) {
+            const tbody = document.getElementById('listaMatrizParcelamentos');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            if(parcelamentos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="19" class="py-4 text-center text-slate-400">Nenhum parcelamento ativo encontrado.</td></tr>';
+                return;
+            }
+            parcelamentos.forEach(p => {
+                const tr = document.createElement('tr');
+                const vlrParcela = p.valor / (p.numParcelas || 1);
+                let mesesTD = '';
+                for(let i=1; i<=12; i++) {
+                    mesesTD += `<td class="text-center py-2 text-[11px]">R$ ${vlrParcela.toFixed(0)}</td>`;
+                }
+                tr.innerHTML = `
+                    <td class="py-2.5 font-bold text-slate-800">${p.descricao}</td>
+                    <td class="py-2.5">${p.cartao}</td>
+                    <td class="py-2.5 text-center">${p.numParcelas}x</td>
+                    <td class="py-2.5 text-right font-bold">R$ ${vlrParcela.toFixed(2)}</td>
+                    <td class="py-2.5 text-right font-bold text-rose-700">R$ ${p.valor.toFixed(2)}</td>
+                    ${mesesTD}
+                    <td class="py-2.5 text-center"><span class="bg-amber-50 text-amber-800 px-2 py-0.5 rounded text-[10px] font-bold border border-amber-200">Ativo</span></td>
+                    <td class="py-2.5 text-center"><button onclick="excluirLancamento('${p.id}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderMatrizParcelamentosGlobal() {}
+
+        function renderPlanVsReal(catMap) {
+            const tbody = document.getElementById('listaPlanVsRealTabela');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+            const ano = document.getElementById('filtroAnoPlanejamento')?.value || '2026';
+            const mesStr = document.getElementById('filtroMesPlanReal')?.value || '2026-09';
+            const mesIdx = parseInt(mesStr.split('-')[1]) - 1;
+
+            window.configListas.categorias.forEach(cat => {
+                const planejado = getPlanejado(cat, mesIdx, ano);
+                const realizado = catMap[cat] || 0;
+                const diff = planejado - realizado;
+                const pct = planejado > 0 ? (realizado / planejado) * 100 : 0;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="py-2.5 font-bold text-slate-800">${cat}</td>
+                    <td class="py-2.5 text-right font-bold">R$ ${planejado.toFixed(2)}</td>
+                    <td class="py-2.5 text-right font-bold text-rose-700">R$ ${realizado.toFixed(2)}</td>
+                    <td class="py-2.5 text-right font-bold ${diff >= 0 ? 'text-emerald-700' : 'text-rose-600'}">R$ ${diff.toFixed(2)}</td>
+                    <td class="py-2.5 text-center">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${pct <= 100 ? 'bg-emerald-50 text-emerald-800 border-emerald-200' : 'bg-rose-50 text-rose-800 border-rose-200'}">
+                            ${pct.toFixed(0)}% da Meta
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderDashboardInsights(totalE, totalG, pctComprometida, catMap) {
+            const container = document.getElementById('listaInsightsDashboard');
+            if(!container) return;
+            container.innerHTML = '';
+            const insights = [];
+
+            if(pctComprometida > 80) {
+                insights.push(`<div class="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-900">⚠️ Atenção: O comprometimento da renda está em <strong>${pctComprometida}%</strong>, acima do limite recomendado de 80%.</div>`);
+            } else {
+                insights.push(`<div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-900">🟢 Ótimo controle: O comprometimento da renda está em <strong>${pctComprometida}%</strong>.</div>`);
+            }
+
+            let maiorCat = '';
+            let maiorVal = 0;
+            for(const [cat, val] of Object.entries(catMap)) {
+                if(val > maiorVal) { maiorVal = val; maiorCat = cat; }
+            }
+            if(maiorCat) {
+                insights.push(`<div class="p-3 bg-sky-50 border border-sky-200 rounded-xl text-sky-900">📊 A categoria com maior gasto no mês é <strong>${maiorCat}</strong> com <strong>R$ ${maiorVal.toFixed(2)}</strong>.</div>`);
+            }
+
+            insights.forEach(divStr => container.innerHTML += divStr);
+        }
+
+        function renderMetas() {
+            const tbody = document.getElementById('listaMetasTabela');
+            const galeria = document.getElementById('visaoMetaGaleria');
+            if(!tbody || !galeria) return;
+            tbody.innerHTML = '';
+            galeria.innerHTML = '';
+
+            const ano = document.getElementById('filtroAnoMeta')?.value || '2026';
+            const metasFiltradas = (window.metasCache || []).filter(m => String(m.ano) === String(ano));
+
+            if(metasFiltradas.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="py-4 text-center text-slate-400">Nenhuma meta cadastrada para este ano.</td></tr>';
+                galeria.innerHTML = '<div class="col-span-full py-4 text-center text-slate-400">Nenhuma meta cadastrada para este ano.</div>';
+                return;
+            }
+
+            metasFiltradas.forEach(m => {
+                const pct = m.alvo > 0 ? Math.min(100, (m.realizado / m.alvo) * 100) : 0;
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="py-2.5">
+                        <div class="flex items-center gap-2">
+                            <div class="w-16 bg-slate-200 h-2 rounded-full overflow-hidden">
+                                <div class="bg-sky-600 h-full" style="width: ${pct}%"></div>
+                            </div>
+                            <span class="text-[10px] font-bold">${pct.toFixed(0)}%</span>
+                        </div>
+                    </td>
+                    <td class="py-2.5 font-bold text-slate-800">${m.nome}</td>
+                    <td class="py-2.5 text-center font-bold">R$ ${m.realizado}</td>
+                    <td class="py-2.5 text-center font-bold">R$ ${m.alvo}</td>
+                    <td class="py-2.5"><span class="bg-sky-50 text-sky-800 px-2 py-0.5 rounded text-[10px] font-bold border border-sky-200">${m.categoria}</span></td>
+                    <td class="py-2.5 text-slate-500">${m.recompensa || '-'}</td>
+                    <td class="py-2.5 text-center space-x-1">
+                        <button onclick='carregarMetaEdicao(${JSON.stringify(m)}, "${m.id}")' class="text-sky-600"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="excluirMeta('${m.id}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+
+                const card = document.createElement('div');
+                card.className = "bg-white p-4 border border-slate-200 rounded-2xl shadow-sm space-y-3";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="bg-sky-50 text-sky-800 px-2.5 py-1 rounded-xl text-[10px] font-bold border border-sky-200">${m.categoria}</span>
+                        <div class="space-x-1">
+                            <button onclick='carregarMetaEdicao(${JSON.stringify(m)}, "${m.id}")' class="text-sky-600"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="excluirMeta('${m.id}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-slate-800 text-sm">${m.nome}</h4>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-500">Progresso (${pct.toFixed(0)}%)</span>
+                            <strong class="text-slate-800">R$ ${m.realizado} / R$ ${m.alvo}</strong>
+                        </div>
+                        <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+                            <div class="bg-sky-600 h-full" style="width: ${pct}%"></div>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Recompensa: <strong>${m.recompensa || '-'}</strong></p>
+                `;
+                galeria.appendChild(card);
+            });
+        }
+
+        window.setVisaoMetas = function(visao) {
+            const tTab = document.getElementById('visaoMetaTabela');
+            const gTab = document.getElementById('visaoMetaGaleria');
+            const btnT = document.getElementById('btnMetaTabela');
+            const btnG = document.getElementById('btnMetaGaleria');
+            if(visao === 'tabela') {
+                tTab.classList.remove('hidden');
+                gTab.classList.add('hidden');
+                btnT.className = "px-3 py-1 rounded-lg font-bold bg-white text-slate-800 shadow-sm";
+                btnG.className = "px-3 py-1 rounded-lg font-bold text-slate-500";
+            } else {
+                tTab.classList.add('hidden');
+                gTab.classList.remove('hidden');
+                btnG.className = "px-3 py-1 rounded-lg font-bold bg-white text-slate-800 shadow-sm";
+                btnT.className = "px-3 py-1 rounded-lg font-bold text-slate-500";
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            atualizarSelectsDinamicos();
+            renderPlanejamentoAnualCards('2026');
+        });
     </script>
-    <script>
-    /* ================= FINANÇAS V2 — camada de consistência e analytics ================= */
-    (function(){
-      const money = v => Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-      const num = v => { if (typeof v === 'number') return v; const s=String(v??'').trim(); if(!s) return 0; return Number(s.replace(/R\$|\s/g,'').replace(/\./g,'').replace(',','.')) || 0; };
-      const isoDate = v => { if(v instanceof Date) return v.toISOString().slice(0,10); const s=String(v??'').trim(); if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s; if(/^\d{2}\/\d{2}\/\d{4}$/.test(s)){const [d,m,y]=s.split('/');return `${y}-${m}-${d}`;} return ''; };
-      const addMonths=(ym,n)=>{const [y,m]=ym.split('-').map(Number); const d=new Date(y,m-1+n,1); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`};
-      const cardCfg = ()=>window.configCartoesLimites||{};
-      function invoiceMonth(data, card){
-        const ym=String(data||'').slice(0,7); if(!ym) return ''; const cfg=cardCfg()[card]; if(!cfg) return ym;
-        const day=Number(String(data).slice(8,10))||1; return day>Number(cfg.fechamento||31)?addMonths(ym,1):ym;
-      }
-      function installmentValue(item){ const n=Math.max(1,Number(item.numParcelas)||1); return n>1 ? Number(item.valor||0)/n : Number(item.valor||0); }
-      function installmentMonth(item,i){ return invoiceMonth(item.data,item.cartao||'') ? addMonths(invoiceMonth(item.data,item.cartao||''),i) : ''; }
-      function installmentsInMonth(item,ym){ const n=Math.max(1,Number(item.numParcelas)||1); if(n===1) return item.data?.slice(0,7)===ym ? 1:0; let c=0; for(let i=0;i<n;i++) if(installmentMonth(item,i)===ym)c++; return c; }
-      function escapeHtml(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));}
-      window.financeV2={money,num,isoDate,addMonths,invoiceMonth,installmentValue,installmentsInMonth};
-
-      // Substitui a rotina central: orçamento, parcelamentos e dashboard passam a usar o mesmo motor.
-      window.renderDashboardInsights = function(entradas,gastos,pct,catMap){
-        const c=document.getElementById('listaInsightsDashboard'); if(!c)return; c.innerHTML='';
-        const ym=document.getElementById('filtroMesDash')?.value||new Date().toISOString().slice(0,7);
-        const lanc=window.cacheLancamentosGlobal||[];
-        const renda=Number(entradas)||0, saida=Number(gastos)||0, saldo=renda-saida;
-        const cards=[]; const add=(icon,title,text,cls='border-slate-200')=>cards.push(`<div class="p-3 bg-white border ${cls} rounded-xl shadow-sm"><div class="font-bold text-slate-800 mb-1">${icon} ${title}</div><div class="text-slate-600 leading-relaxed">${text}</div></div>`);
-        const economia=renda>0?(saldo/renda*100):0;
-        add(economia<0?'🔴':'🟢','Taxa de poupança',`O mês termina com <strong>${money(saldo)}</strong> livres, equivalente a <strong>${economia.toFixed(1)}%</strong> da renda.` ,economia<10?'border-rose-200':'border-emerald-200');
-        const cats=Object.entries(catMap||{}).sort((a,b)=>b[1]-a[1]);
-        if(cats[0]) add('📊','Maior concentração',`<strong>${escapeHtml(cats[0][0])}</strong> representa <strong>${((cats[0][1]/Math.max(1,saida))*100).toFixed(1)}%</strong> das saídas do mês (${money(cats[0][1])}).`);
-        const ano=ym.slice(0,4), mes=Number(ym.slice(5,7))-1;
-        const planTotal=Object.keys(window.configListas?.categorias||{}).length? (window.configListas.categorias||[]).reduce((a,c)=>a+getPlanejado(c,mes,ano),0):0;
-        if(planTotal>0) add(saida>planTotal?'⚠️':'🎯','Orçamento x realizado',`O gasto está <strong>${saida>planTotal?'acima':'abaixo'}</strong> do planejado em <strong>${money(Math.abs(planTotal-saida))}</strong>. Planejado: ${money(planTotal)}.` ,saida>planTotal?'border-rose-200':'border-emerald-200');
-        let futuro=0; lanc.filter(x=>x.tipo==='Despesa'&&x.pagamento==='Crédito').forEach(x=>{const n=Math.max(1,Number(x.numParcelas)||1); if(n>1){for(let i=0;i<n;i++){const m=installmentMonth(x,i); if(m>ym) futuro+=installmentValue(x);}}});
-        if(futuro>0) add('💳','Compromissos futuros',`Há aproximadamente <strong>${money(futuro)}</strong> em parcelas de cartão após ${ym}. Isso não significa gasto novo, mas reduz a renda disponível dos próximos meses.`,'border-amber-200');
-        const rec=(window.recorrentesCache||[]).reduce((a,x)=>a+Number(x.valor||0),0);
-        if(rec>0) add('🔁','Custos recorrentes',`As contas recorrentes cadastradas somam <strong>${money(rec)}/mês</strong>. Compare esse valor com a renda e revise periodicamente.`);
-        if(!cards.length) add('💡','Sem dados suficientes','Cadastre lançamentos para gerar análises.');
-        c.innerHTML=cards.slice(0,6).join('');
-      };
-
-      window.renderCharts = function(entradas,saidas,catMap,historico,fluxo){
-        const make=(id,type,data,options)=>{const el=document.getElementById(id);if(!el)return null; const old=Chart.getChart(el);if(old)old.destroy();return new Chart(el,{type,data,options:{responsive:true,maintainAspectRatio:false,...options}})};
-        const cats=Object.entries(catMap||{}).sort((a,b)=>b[1]-a[1]);
-        make('chartPizzaCategorias','doughnut',{labels:cats.length?cats.map(x=>x[0]):['Sem dados'],datasets:[{data:cats.length?cats.map(x=>x[1]):[1],backgroundColor:['#38bdf8','#34d399','#fbbf24','#f87171','#a78bfa','#f472b6','#94a3b8','#60a5fa','#fb7185','#2dd4bf'],borderWidth:2}]},{plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>`${money(c.raw)} (${((c.raw/Math.max(1,c.dataset.data.reduce((a,b)=>a+b,0)))*100).toFixed(1)}%)`}}}});
-        const months=Object.keys(historico||{}).sort().slice(-12);
-        make('chartBarraEntradasSaidas','bar',{labels:months.length?months:['Atual'],datasets:[{label:'Entradas',data:months.map(m=>historico[m].entradas),backgroundColor:'#34d399',borderRadius:6},{label:'Saídas',data:months.map(m=>historico[m].saidas),backgroundColor:'#f87171',borderRadius:6}]},{plugins:{legend:{position:'bottom'}} ,scales:{y:{beginAtZero:true,ticks:{callback:v=>money(v)}}}});
-        let ac=0; const sal=months.map(m=>{ac+=historico[m].entradas-historico[m].saidas;return ac});
-        make('chartEvolucaoSaldo','line',{labels:months.length?months:['Atual'],datasets:[{label:'Saldo acumulado',data:sal.length?sal:[entradas-saidas],borderColor:'#0284c7',backgroundColor:'rgba(224,242,254,.45)',fill:true,tension:.3}]},{plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>money(v)}}}});
-        const fp=Object.entries(fluxo||{}); make('chartFluxoPagamentos','doughnut',{labels:fp.length?fp.map(x=>x[0]):['Sem dados'],datasets:[{data:fp.length?fp.map(x=>x[1]):[1],backgroundColor:['#60a5fa','#34d399','#fbbf24','#f472b6','#a78bfa']}]},{plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>money(c.raw)}}}});
-      };
-
-      // Corrige parcelamentos: Valor é o valor total da compra; a parcela é valor/quantidade.
-      const oldMatrix=window.renderMatrizParcelamentos;
-      window.renderMatrizParcelamentos=function(parcelas,gastos){
-        const cards=document.getElementById('cardsCartoesComLimite'); if(cards){cards.innerHTML=''; for(const [cartao,cfg] of Object.entries(cardCfg())){
-          const now=new Date().toISOString().slice(0,7); let usado=0; (window.cacheLancamentosGlobal||[]).forEach(x=>{if(x.tipo==='Despesa'&&x.pagamento==='Crédito'&&x.cartao===cartao) usado+=installmentValue(x)*installmentsInMonth(x,now);});
-          const pct=cfg.limite?Math.min(100,usado/cfg.limite*100):0; cards.insertAdjacentHTML('beforeend',`<div class="p-5 rounded-2xl border border-slate-200 bg-white shadow-sm space-y-3"><div class="flex justify-between"><strong>💳 ${escapeHtml(cartao)}</strong><span class="text-[10px] font-bold">Fecha ${cfg.fechamento} | Vence ${cfg.vencimento}</span></div><div class="grid grid-cols-3 gap-2 text-xs"><div><span class="text-slate-400 block">Fatura estimada</span><b>${money(usado)}</b></div><div><span class="text-slate-400 block">Limite</span><b>${money(cfg.limite)}</b></div><div><span class="text-slate-400 block">Livre</span><b class="text-sky-700">${money(Math.max(0,cfg.limite-usado))}</b></div></div><div class="h-2 bg-slate-100 rounded-full overflow-hidden"><div class="h-2 bg-sky-500" style="width:${pct}%"></div></div></div>`);
-        }}
-        const tbody=document.getElementById('listaMatrizParcelamentos'); if(!tbody)return; tbody.innerHTML=''; const ano=Number(document.getElementById('filtroAnoParcelamentos')?.value||new Date().getFullYear());
-        if(!parcelas.length){tbody.innerHTML='<tr><td colspan="19" class="py-4 text-center text-slate-400">Nenhum parcelamento ativo.</td></tr>';return;}
-        parcelas.forEach(p=>{const n=Math.max(1,Number(p.numParcelas)||1), pv=installmentValue(p), start=invoiceMonth(p.data,p.cartao||'-'), tr=document.createElement('tr'); let h=`<td class="py-2.5 font-bold">${escapeHtml(p.descricao)}</td><td>${escapeHtml(p.cartao||'-')}</td><td class="text-center">${n}x</td><td class="text-right">${money(pv)}</td><td class="text-right">${money(pv*n)}</td>`; for(let m=0;m<12;m++){const ym=`${ano}-${String(m+1).padStart(2,'0')}`; const qtd=installmentsInMonth(p,ym); h+=`<td class="text-center font-bold">${qtd?money(pv*qtd):'-'}</td>`;} const end=addMonths(start,n-1); h+=`<td class="text-center"><span class="bg-amber-50 text-amber-800 px-2 py-0.5 rounded">${end>=`${ano}-01`?'Em andamento':'Concluído'}</span></td><td class="text-center"><button onclick="excluirLancamento('${p.id}')" class="text-rose-500"><i class="fa-solid fa-trash"></i></button></td>`; tr.innerHTML=h; tbody.appendChild(tr);});
-      };
-
-      // Reforça render de planejamento com ano correto e evita IDs HTML inválidos.
-      const oldRep=window.replicarParaTodosMeses; window.replicarParaTodosMeses=function(cat){const input=document.getElementById('replicar_val_'+cat);if(!input){alert('Campo não encontrado.');return;} const v=num(input.value);if(v<0){alert('Informe um valor válido.');return;} const ano=document.getElementById('filtroAnoPlanejamento').value; if(!window.planejamentoMatriz[ano])window.planejamentoMatriz[ano]={};window.planejamentoMatriz[ano][cat]=Array(12).fill(v);localStorage.setItem('planejamentoMatrizV2',JSON.stringify(window.planejamentoMatriz));renderPlanejamentoAnualCards(ano);};
-
-      // Upload robusto: valida cabeçalhos, datas, valores e importa em lote.
-      window.importarPlanilhaLancamentosModal=async function(){const file=document.getElementById('fileUploadLancamentosModal').files[0];if(!file){alert('Selecione um arquivo.');return;} try{const data=new Uint8Array(await file.arrayBuffer()),wb=XLSX.read(data,{type:'array',cellDates:true});const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});const aliases={data:['Data','data'],tipo:['Tipo','tipo'],descricao:['Descricao','Descrição','descricao'],valor:['Valor','valor'],categoria:['Categoria','categoria'],pagamento:['Pagamento','pagamento'],cartao:['Cartao','Cartão','cartao'],tipoCompra:['TipoCompra','Tipo Compra','tipoCompra'],numParcelas:['NumParcelas','Nº Parcelas','numParcelas']}; const pick=(r,a)=>a.map(k=>r[k]).find(v=>v!==undefined&&v!==''); const valid=[]; rows.forEach((r,i)=>{const descricao=pick(r,aliases.descricao),valor=num(pick(r,aliases.valor)),data=isoDate(pick(r,aliases.data));if(!descricao||valor<=0||!data)throw new Error(`Linha ${i+2}: Descricao, Valor > 0 e Data válida são obrigatórios.`); const tipo=String(pick(r,aliases.tipo)||'Despesa'); const pag=String(pick(r,aliases.pagamento)||'Pix / Débito'); const tc=pag==='Crédito'?String(pick(r,aliases.tipoCompra)||'À vista'):'À vista'; const np=tc==='Parcelada'?Math.max(2,Number(pick(r,aliases.numParcelas)||2)):1; valid.push({data,tipo,descricao:String(descricao),valor,categoria:String(pick(r,aliases.categoria)||'Mercado'),pagamento:pag,cartao:pag==='Crédito'?String(pick(r,aliases.cartao)||'-'):'-',tipoCompra:tc,numParcelas:np,criadoEm:serverTimestamp()});}); const batch=writeBatch(window.firebaseDbInstance);valid.forEach(x=>batch.set(doc(collection(window.firebaseDbInstance,'lancamentos')),x));await batch.commit();alert(`Importação concluída: ${valid.length} lançamento(s).`);closeModal('modalUploadLancamentos');document.getElementById('fileUploadLancamentosModal').value='';}catch(e){console.error(e);alert(`Importação não realizada. ${e.message||'Verifique o modelo.'}`);}};
-
-      window.importarExcelMercadoModal=async function(){const file=document.getElementById('fileExcelMercadoModal').files[0];if(!file){alert('Selecione um arquivo.');return;}try{const wb=XLSX.read(new Uint8Array(await file.arrayBuffer()),{type:'array',cellDates:true}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{defval:''});const pick=(r,ks)=>ks.map(k=>r[k]).find(v=>v!==undefined&&v!=='');const valid=[];rows.forEach((r,i)=>{const produto=pick(r,['Produto','produto','PRODUTO']),valor=num(pick(r,['ValorUnitario','Valor Unitário','valorUnitario'])),data=isoDate(pick(r,['Data','data']));if(!produto||valor<=0||!data)throw new Error(`Linha ${i+2}: Produto, ValorUnitario > 0 e Data válida são obrigatórios.`);valid.push({data,produto:String(produto),codigo:String(pick(r,['Codigo','Código','codigo'])||'000'),qtd:Math.max(0.001,num(pick(r,['Qtd','qtd'])||1)),unidade:String(pick(r,['Unidade','unidade'])||'UN'),valor,criadoEm:serverTimestamp()});});const batch=writeBatch(window.firebaseDbInstance);valid.forEach(x=>batch.set(doc(collection(window.firebaseDbInstance,'mercado')),x));await batch.commit();alert(`Importação concluída: ${valid.length} item(ns).`);closeModal('modalUploadMercado');document.getElementById('fileExcelMercadoModal').value='';}catch(e){console.error(e);alert(`Importação não realizada. ${e.message||'Verifique o modelo.'}`);}};
-
-      // Recorrentes: registra no dia real de vencimento e guarda categoria/pagamento.
-      const oldSalvarRec=window.salvarRecorrente; window.salvarRecorrente=async function(e){e.preventDefault();const id=document.getElementById('recEditId').value;const obj={nome:document.getElementById('recNome').value.trim(),valor:num(document.getElementById('recValor').value),dia:Math.min(31,Math.max(1,Number(document.getElementById('recDia').value)||1)),categoria:document.getElementById('recCategoria')?.value||'Moradia/Contas',pagamento:document.getElementById('recPagamento')?.value||'Pix / Débito'};if(!obj.nome||obj.valor<=0){alert('Preencha nome e valor.');return;}if(id)await updateDoc(doc(window.firebaseDbInstance,'recorrentes',id),obj);else{obj.criadoEm=serverTimestamp();await addDoc(collection(window.firebaseDbInstance,'recorrentes'),obj);}document.getElementById('formRecorrente').reset();document.getElementById('recEditId').value='';document.getElementById('modalRecTitle').innerText='🔁 Cadastrar Conta Recorrente';closeModal('modalRecorrente');};
-      const oldPay=window.pagarRecorrente; window.pagarRecorrente=async function(nome,valor){const periodo=document.getElementById('filtroMesRecorrentes').value;const item=(window.recorrentesCache||[]).find(x=>x.nome===nome);const dia=Math.min(31,Math.max(1,Number(item?.dia)||1));const lastDay=new Date(Number(periodo.slice(0,4)),Number(periodo.slice(5,7)),0).getDate();const day=Math.min(dia,lastDay);const dataPagamento=`${periodo}-${String(day).padStart(2,'0')}`;const ref=await addDoc(collection(window.firebaseDbInstance,'lancamentos'),{data:dataPagamento,tipo:'Despesa',descricao:`Recorrente: ${nome}`,valor:Number(valor),categoria:item?.categoria||'Moradia/Contas',pagamento:item?.pagamento||'Pix / Débito',cartao:'-',tipoCompra:'À vista',numParcelas:1,recorrenteNome:nome,recorrentePeriodo:periodo,criadoEm:serverTimestamp()});localStorage.setItem(`rec_lanc_id_${nome}_${periodo}`,ref.id);localStorage.setItem(`rec_paga_${nome}_${periodo}`,'true');renderRecorrentesCards();};
-      window.carregarRecorrenteEdicao=function(item,id){document.getElementById('recEditId').value=id;document.getElementById('recNome').value=item.nome;document.getElementById('recValor').value=item.valor;document.getElementById('recDia').value=item.dia; if(document.getElementById('recCategoria'))document.getElementById('recCategoria').value=item.categoria||'Moradia/Contas';if(document.getElementById('recPagamento'))document.getElementById('recPagamento').value=item.pagamento||'Pix / Débito';document.getElementById('modalRecTitle').innerText='✏️ Editar Conta Recorrente';openModal('modalRecorrente');};
-
-      // Mercado: compara preço unitário, quantidade e variação recente; insights mais úteis.
-      window.renderInsightsMercado=function(produtosHist){const ul=document.getElementById('listaInsightsMercado');if(!ul)return;const rows=[];for(const [prod,h] of Object.entries(produtosHist)){h.sort((a,b)=>new Date(a.data)-new Date(b.data));if(h.length>=2){const first=h[0].valor,last=h[h.length-1].valor,prev=h[h.length-2].valor,delta=prev?((last-prev)/prev*100):0,overall=first?((last-first)/first*100):0;rows.push(`<li>🛒 <strong>${escapeHtml(prod)}</strong>: última compra ${money(last)}; variação recente <strong>${delta>=0?'+':''}${delta.toFixed(1)}%</strong>; desde a primeira, <strong>${overall>=0?'+':''}${overall.toFixed(1)}%</strong>.</li>`);}} if(!rows.length)rows.push('<li>Cadastre pelo menos duas compras do mesmo produto para medir variação de preço.</li>');ul.innerHTML=rows.sort().slice(0,8).join('');};
-
-      // Ajuste dos selects após criação dinâmica.
-      const oldOnload=window.onload; window.addEventListener('load',()=>{try{renderDropdownsDynamic();document.getElementById('recCategoria')&&(document.getElementById('recCategoria').value='Moradia/Contas');document.getElementById('recPagamento')&&(document.getElementById('recPagamento').value='Pix / Débito');}catch(e){console.error(e)}});
-    })();
-    </script>
-
 </body>
 </html>
