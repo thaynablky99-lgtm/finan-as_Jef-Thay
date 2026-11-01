@@ -306,6 +306,61 @@ textarea.input{height:auto;padding:9px 11px;resize:vertical;line-height:1.5}
 .sheet-g button .ic{color:var(--accent)}
 .lcard{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--border-2)}
 .lcard:last-child{border-bottom:0}
+
+/* ===== Tema azul-marinho ===== */
+:root{--bg:#f2f4f8;--surface-2:#f4f6fa;--border:#e1e6ef;--border-2:#edf0f5;--text:#14213d;--text-2:#46536b;--muted:#6b778d;--faint:#9aa5b8;
+  --ink:#0b2240;--ink-2:#123463;--accent:#1243a0;--accent-2:#0c3480;--accent-weak:#e8eefa;--accent-ring:rgba(18,67,160,.18);
+  --pos:#1d8a5a;--pos-weak:#e4f4ec;--neg:#c8323e;--neg-weak:#fcebec;--warn:#b86e12;--warn-weak:#fdf2e2;--info:#1f6fc5;--info-weak:#e8f1fc;
+  --shadow:0 1px 2px rgba(11,34,64,.05),0 6px 18px -12px rgba(11,34,64,.18);--radius:14px}
+body{background:var(--bg)}
+.sidebar{background:var(--ink);color:#c7d3e6;border-right:0}
+.brand{border-bottom-color:rgba(255,255,255,.1)}
+.brand-mark{background:#fff;color:var(--ink);box-shadow:none}
+.brand b{color:#fff}.brand span{color:#9fb1cc}
+.nav-g{color:#7f93b3}
+.nav-i{color:#d3deee;border-radius:10px}
+.nav-i:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav-i.on{background:#fff;color:var(--ink);font-weight:600}
+.nav-i.on::before{display:none}
+.nav-i .ic{color:#9fb1cc}.nav-i.on .ic{color:var(--accent)}
+.sync{color:#9fb1cc;border-top-color:rgba(255,255,255,.1)}
+.topbar{background:rgba(242,244,248,.9)}
+.tb-t h1{color:var(--ink);font-weight:700}
+.card,.kpi,.cc,.meta-c{border-color:var(--border)}
+.card-h h3{color:var(--ink);font-weight:700}
+.btn-primary{background:var(--accent);border-color:var(--accent);box-shadow:none;font-weight:600}
+.btn-primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
+.btn{font-weight:600;color:var(--ink)}.btn-primary{color:#fff}
+.input,.select{background-color:var(--surface-2);border-color:#e3e8f0}
+.input:focus,.select:focus{background-color:#fff}
+.fab{background:var(--accent);box-shadow:0 12px 26px -8px rgba(18,67,160,.6)}
+.bn.on{color:var(--ink)}.bn.on .ic{color:var(--accent)}
+.bar{background:#e9edf4}.bar>i{background:var(--accent)}.bar.pos>i{background:#2e9e6b}.bar.warn>i{background:#e3a03a}.bar.neg>i{background:#d64545}
+.spark i{background:#c9d6ef}
+.toast{background:var(--ink)}
+.tbl tbody tr:hover td{background:#f7f9fc}
+.datebox{border-color:var(--border);background:#fff}.datebox b{color:var(--ink)}
+.stepper span.done{background:var(--accent-weak);color:var(--accent)}.stepper span.cur{background:var(--accent)}
+.seg button.on{color:var(--ink);font-weight:600}
+.hero{background:linear-gradient(120deg,#0b2240 0%,#123463 60%,#1a4a8c 100%);color:#fff;border:0;box-shadow:0 18px 40px -24px rgba(11,34,64,.8)}
+.hero>*{position:relative;z-index:1}
+.hero::after{content:"";position:absolute;right:-80px;top:-120px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.10),transparent 70%);pointer-events:none}
+.hero-l,.hero-n,.hero-st span,.ring small{color:#b6c5dc}.hero-st small{color:#9fb1cc}
+.hero-st,.hero-st>div{border-color:rgba(255,255,255,.12)!important}
+@media (max-width:1180px){.hero-st{border-top-color:rgba(255,255,255,.12)!important}}
+.hero .delta.bom{background:rgba(76,208,144,.18);color:#7fe0b0}.hero .delta.ruim{background:rgba(255,120,130,.18);color:#ffaab2}.hero .delta.neutro{background:rgba(255,255,255,.12);color:#d3deee}
+.donut-wrap{display:grid;grid-template-columns:210px minmax(0,1fr);gap:26px;align-items:center}
+.chart.donut{height:210px}
+.donut-c{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none;line-height:1.2}
+.donut-c b{display:block;font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.02em}.donut-c span{font-size:11.5px;color:var(--muted)}
+.cat-leg{display:flex;flex-direction:column;gap:2px}
+.cat-leg button{display:grid;grid-template-columns:10px minmax(0,1fr) auto 44px;gap:10px;align-items:center;border:0;background:none;padding:7px 8px;border-radius:10px;text-align:left;font-size:13px;color:var(--text)}
+.cat-leg button:hover,.cat-leg button.hl{background:var(--surface-2)}
+.cat-leg i{width:10px;height:10px;border-radius:4px}
+.cat-leg .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat-leg .vl{font-weight:600;font-variant-numeric:tabular-nums}.cat-leg .pc{color:var(--muted);font-size:12px;text-align:right;font-variant-numeric:tabular-nums}
+.hint-click{font-size:11.5px;color:var(--faint);display:inline-flex;align-items:center;gap:5px}
+@media (max-width:900px){.donut-wrap{grid-template-columns:1fr;gap:12px}.chart.donut{height:190px;max-width:220px;margin:0 auto;width:100%}}
 </style>
 </head>
 <body>
@@ -351,7 +406,12 @@ const COL = {
   lancamentos: 'lancamentos', mercado: 'mercado', recorrentes: 'recorrentes',
   investimentos: 'investimentos', metas: 'metas', desejos: 'desejos', pdca: 'pdca'
 };
-const CONFIG_DOC = ['config', 'app'];   // configurações compartilhadas entre os dois celulares
+const CONFIG_DOC = ['config', 'app'];
+// Faturas já transcritas, prontas para revisar e importar (aparecem em Lançamentos até serem importadas)
+const FATURAS_PRONTAS = [
+  { id: 'santander-2026-11', titulo: 'Fatura Santander · vencimento nov/2026', resumo: '102 lançamentos · R$ 8.245,94 (compras + encargos)',
+    linhas: "02/10/2026\tDespesa\tOTICAS DINIZ (05/05)\t605,18\tSaúde\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tMP *MENDESACESSOR (02/02)\t207,50\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n29/09/2026\tDespesa\tPADARIA BELA VISTA\t16,50\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n30/09/2026\tDespesa\tUNIMED PINDA LABORAT\t68,97\tSaúde\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t20,62\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tAMCC FEIRAS\t20,00\tMercado\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tGOJUICEPATIOPINDA\t17,50\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n04/10/2026\tDespesa\tEMPORIO JS DISTRIBID\t81,00\tMercado\tCrédito\tSantander Jeferson\tÀ vista\t1\n05/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t13,99\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n07/10/2026\tDespesa\tDILAN AUGUSTO DE LANES\t13,98\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n07/10/2026\tDespesa\tCORUJA LANCHES\t68,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n08/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t48,49\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n09/10/2026\tDespesa\tPADARIA FAMILIA ROQUE\t4,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n09/10/2026\tDespesa\tGME DROGARIA E PERFUM\t5,99\tSaúde\tCrédito\tSantander Jeferson\tÀ vista\t1\n10/10/2026\tDespesa\tMARCUSVINICIUSDA\t30,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n11/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t7,38\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n11/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t32,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n11/10/2026\tDespesa\tTENDA ATACADO S A\t203,50\tMercado\tCrédito\tSantander Jeferson\tÀ vista\t1\n12/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t20,18\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n13/10/2026\tDespesa\tSANTANA BEER\t5,50\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n13/10/2026\tDespesa\tPES E PATAS BRASIL COM\t17,90\tPets\tCrédito\tSantander Jeferson\tÀ vista\t1\n14/10/2026\tDespesa\tMARIANAAPARECIDA\t9,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n15/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t26,45\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n15/10/2026\tDespesa\tSOL LANCHES\t30,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t18,89\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tANALUIZAVIEIRA\t19,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tFABIANOANTONIO\t40,23\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tSANTANA BEER\t18,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n17/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t35,97\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n19/10/2026\tDespesa\tSANTANA BEER\t22,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n20/10/2026\tDespesa\tCASEIRO\t24,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n20/10/2026\tDespesa\tSANTANA BEER\t12,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t11,90\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tJOZEANO ALVES DE OLIVE\t7,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tCASEIRO\t40,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tSANTANA BEER\t15,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n24/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t11,97\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n24/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t12,90\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n26/10/2026\tDespesa\tANALUIZAVIEIRA\t36,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n27/10/2026\tDespesa\tMERCADO*MERCADOLIVRE (11/12)\t124,08\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n09/10/2026\tDespesa\tHOTEL FAZENDA RAMON (09/10)\t212,20\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n07/10/2026\tDespesa\tEBN *CRUNCHYROLL (05/12)\t14,90\tAssinaturas\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tMERCADO*MERCADOLIVRE (05/10)\t123,30\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n04/10/2026\tDespesa\tVINDI *ALCAFIL (04/05)\t71,38\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tMERCADOLIVRE*MERCADOL (04/08)\t54,55\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tMERCADOLIVRE*MERCADOL (04/06)\t50,66\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n14/10/2026\tDespesa\tMERCADO*MERCADOLIVRE (01/10)\t299,50\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n20/10/2026\tDespesa\tAMAZON BR *AMAZON BR (01/02)\t52,15\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/09/2026\tDespesa\tHDI SEGUROS SA\t264,33\tDespesas Carro\tCrédito\tSantander Jeferson\tÀ vista\t1\n05/10/2026\tDespesa\tAMAZONMKTPLC*AMAZON BR\t36,63\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n05/10/2026\tDespesa\tAMAZONMKTPLC*IRENECRIS\t24,99\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n13/10/2026\tDespesa\tIFD*RESTAURANTE CASEIR\t21,39\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n14/10/2026\tDespesa\tMERCADOLIVRE*MERCADOL\t355,21\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n19/10/2026\tDespesa\tIFD*55 339 523 RENATA\t52,25\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tGOOGLE PRIME VIDEO\t19,90\tAssinaturas\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tEBN*SPOTIFY\t31,90\tAssinaturas\tCrédito\tSantander Jeferson\tÀ vista\t1\n01/10/2026\tDespesa\tOTICA GHISSI (05/05)\t112,00\tSaúde\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\t00268 SH PATIO PINDA (02/03)\t173,28\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\t00268 SH PATIO PINDA (02/03)\t101,97\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tOSCAR CALCADOS (01/02)\t55,00\tVestuário\tCrédito\tSantander Thayna\tÀ vista\t1\n27/09/2026\tDespesa\tMANA POKE TAUBATE\t134,70\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n27/09/2026\tDespesa\t211 SHIBATA\t33,39\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n27/09/2026\tDespesa\tPADARIA FAMILIA ROQUE\t40,50\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n29/09/2026\tDespesa\tTENDA ATACADO S A\t202,61\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n29/09/2026\tDespesa\tV Z Z N SANTOS\t20,80\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n02/10/2026\tDespesa\t211 SHIBATA\t1011,61\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tPAREBEM\t11,00\tDespesas Carro\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tSUBWAY PATIO PINDA\t69,00\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tZUCH MIX\t44,00\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tREDECINE\t72,00\tLazer\tCrédito\tSantander Thayna\tÀ vista\t1\n04/10/2026\tDespesa\tTENDA ATACADO S A\t206,93\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n06/10/2026\tDespesa\tAPPLE COM/BILL\t5,90\tAssinaturas\tCrédito\tSantander Thayna\tÀ vista\t1\n06/10/2026\tDespesa\tMASTER CA\t2,00\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n08/10/2026\tDespesa\tCACAU SHOW\t69,99\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n09/10/2026\tDespesa\tYAZUSUSHI\t295,57\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n10/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t16,74\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n15/10/2026\tDespesa\tGOCASH *ESTRELA DE PIN\t162,47\tCombustível\tCrédito\tSantander Thayna\tÀ vista\t1\n17/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t40,95\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n17/10/2026\tDespesa\tTENDA ATACADO S A\t197,09\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n17/10/2026\tDespesa\tGOCASH *ESTRELA DE PIN\t315,15\tCombustível\tCrédito\tSantander Thayna\tÀ vista\t1\n18/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t21,16\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tBRUNA CAROLINE TACCOL\t26,50\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t21,89\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tTHC ALIMENTOS\t151,96\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n21/10/2026\tDespesa\tPADARIA BELA VISTA\t13,50\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n22/10/2026\tDespesa\tPADARIA BELA VISTA\t41,50\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n23/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t15,45\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n24/10/2026\tDespesa\tCASA DO PAO DOCE\t48,00\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n24/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t24,94\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n24/10/2026\tDespesa\t211 SHIBATA\t202,92\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n25/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t6,58\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n25/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t45,34\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n01/10/2026\tDespesa\tAMAZON BR (04/04)\t37,80\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tAMAZON BR (04/05)\t36,02\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n28/10/2026\tDespesa\tDAFITI*4606532058 (03/03)\t68,13\tVestuário\tCrédito\tSantander Thayna\tÀ vista\t1\n28/10/2026\tDespesa\tAMAZONMKTPLC*AMAZON BR (03/03)\t63,03\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n28/10/2026\tDespesa\tAMAZON BR *AMAZON BR (02/05)\t45,58\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n05/10/2026\tDespesa\tSHOPEE *DIEUFORTSTORE (01/03)\t69,70\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - JUROS REMUNERATÓRIOS\t57,59\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - IOF\t23,38\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - JUROS DE MORA\t2,04\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - MULTA POR ATRASO\t120,47\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1" }
+];   // configurações compartilhadas entre os dois celulares
 const DEMO = new URLSearchParams(location.search).has('demo');
 const LS = DEMO ? 'demo_' : '';
 
@@ -496,7 +556,8 @@ function mesclarConfig(c = {}) {
     cartoes: c.cartoes && typeof c.cartoes === 'object' ? c.cartoes : JSON.parse(JSON.stringify(d.cartoes)),
     planejamento: c.planejamento && typeof c.planejamento === 'object' ? c.planejamento : {},
     desejos: { ...d.desejos, ...(c.desejos || {}) },
-    prefs: { ...d.prefs, ...(c.prefs || {}) }
+    prefs: { ...d.prefs, ...(c.prefs || {}) },
+    importados: Array.isArray(c.importados) ? c.importados : []
   };
 }
 function carregarConfigLocal() {
@@ -800,12 +861,26 @@ function baixar(nome, conteudo, tipo = 'text/plain') {
 /* =====================================================================
    GRÁFICOS
    ===================================================================== */
-const COR = { accent: '#0d6e63', entrada: '#1baf7a', saida: '#e34948', grid: '#eef0f3', texto: '#6b7280', serie: ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#6250d6', '#e34948'] };
+const COR = { accent: '#1243a0', entrada: '#2e9e6b', saida: '#d64545', grid: '#edf0f5', texto: '#6b778d', suave: '#c9d6ef',
+  serie: ['#1243a0', '#3fa7d6', '#2e9e6b', '#e3a03a', '#d64545', '#7a5cc7', '#0b2240', '#b8c2d3'] };
 const charts = {};
 if (window.Chart) {
   Chart.defaults.font.family = 'Inter, system-ui, sans-serif'; Chart.defaults.font.size = 11.5; Chart.defaults.color = COR.texto;
   Chart.defaults.plugins.legend.display = false; Chart.defaults.maintainAspectRatio = false; Chart.defaults.animation.duration = 350;
-  Object.assign(Chart.defaults.plugins.tooltip, { backgroundColor: '#111827', padding: 10, cornerRadius: 8, titleFont: { weight: '600' }, boxPadding: 4, usePointStyle: true });
+  Chart.defaults.animation.duration = 600; Chart.defaults.animation.easing = 'easeOutQuart';
+  Object.assign(Chart.defaults.plugins.tooltip, { backgroundColor: 'rgba(255,255,255,.97)', titleColor: '#0b2240', bodyColor: '#46536b', borderColor: '#e1e6ef', borderWidth: 1, padding: 12, cornerRadius: 12, titleFont: { weight: '600', size: 12.5 }, bodyFont: { size: 12.5 }, boxPadding: 5, usePointStyle: true, caretSize: 0, displayColors: true });
+  // linha-guia vertical ao passar o mouse em gráficos de linha
+  Chart.register({ id: 'guia', afterDatasetsDraw(ch) {
+    if (ch.config.type !== 'line') return; const a = ch.tooltip?.getActiveElements?.(); if (!a?.length) return;
+    const x = a[0].element.x, { top, bottom } = ch.chartArea, c = ch.ctx; c.save(); c.strokeStyle = 'rgba(18,67,160,.35)'; c.lineWidth = 1; c.setLineDash([4, 4]);
+    c.beginPath(); c.moveTo(x, top); c.lineTo(x, bottom); c.stroke(); c.restore();
+  } });
+}
+const gradiente = (cor, a1 = .28) => ctx => { const { chart } = ctx, ar = chart.chartArea; if (!ar) return 'transparent'; const g = chart.ctx.createLinearGradient(0, ar.top, 0, ar.bottom); const h = cor.replace('#', ''); const [r, gg, b] = [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); g.addColorStop(0, `rgba(${r},${gg},${b},${a1})`); g.addColorStop(1, `rgba(${r},${gg},${b},0)`); return g; };
+const ponteiro = (ev, els) => { if (ev.native?.target) ev.native.target.style.cursor = els.length ? 'pointer' : 'default'; };
+function areaLinha(id, labels, data, label, { cor = COR.accent, fmtY = brlCurto, onClick } = {}) {
+  grafico(id, { type: 'line', data: { labels, datasets: [{ label, data, borderColor: cor, backgroundColor: gradiente(cor), fill: true, tension: .38, borderWidth: 2.5, pointRadius: 0, pointHoverRadius: 6, pointHoverBackgroundColor: cor, pointHoverBorderColor: '#fff', pointHoverBorderWidth: 3, spanGaps: false }] },
+    options: { scales: { y: { ...eixoBRL, ticks: { callback: fmtY, maxTicksLimit: 6 } }, x: semGrade }, plugins: { tooltip: ttBRL }, interaction: { mode: 'index', intersect: false }, onHover: onClick ? ponteiro : undefined, onClick } });
 }
 function grafico(id, cfg) {
   const el = document.getElementById(id); if (!el) return;
@@ -820,12 +895,12 @@ function vazioGrafico(id, msg) {
   return !msg;
 }
 const destruirGraficos = () => Object.keys(charts).forEach(k => { charts[k].destroy(); delete charts[k]; });
-const eixoBRL = { ticks: { callback: v => brlCurto(v) }, grid: { color: COR.grid }, border: { display: false } };
+const eixoBRL = { ticks: { callback: v => brlCurto(v), maxTicksLimit: 6, padding: 8 }, grid: { color: COR.grid, drawTicks: false }, border: { display: false } };
 const semGrade = { grid: { display: false }, border: { display: false } };
 const ttBRL = { callbacks: { label: c => ` ${c.dataset.label ? c.dataset.label + ': ' : ''}${brl(c.raw)}` } };
-function barrasH(id, labels, data, cor = COR.accent) {
+function barrasH(id, labels, data, cor = '#6f8fcf') {
   const box = document.getElementById(id)?.parentElement; if (box) box.style.height = Math.max(150, labels.length * 32 + 30) + 'px';
-  grafico(id, { type: 'bar', data: { labels, datasets: [{ data, backgroundColor: cor, borderRadius: 4, barThickness: 16, borderSkipped: 'start' }] }, options: { indexAxis: 'y', scales: { x: { ...eixoBRL, ticks: { ...eixoBRL.ticks, maxTicksLimit: 5, maxRotation: 0 } }, y: semGrade }, plugins: { tooltip: ttBRL } } });
+  grafico(id, { type: 'bar', data: { labels, datasets: [{ data, backgroundColor: cor, hoverBackgroundColor: COR.accent, borderRadius: 8, barThickness: 14, borderSkipped: 'start' }] }, options: { indexAxis: 'y', scales: { x: { ...eixoBRL, ticks: { ...eixoBRL.ticks, maxTicksLimit: 5, maxRotation: 0 } }, y: { ...semGrade, ticks: { color: '#55546a' } } }, plugins: { tooltip: ttBRL } } });
 }
 const vazioHTML = (t, d = '') => `<div class="empty"><b>${esc(t)}</b>${esc(d)}</div>`;
 
@@ -915,7 +990,7 @@ function formLancamento(l = {}, { duplicar = false } = {}) {
   const descricoes = () => [...new Set(D().lancamentos.map(x => x.descricao).filter(Boolean))].slice(0, 400);
   abrirForm({
     titulo: editando ? 'Editar lançamento' : duplicar ? 'Duplicar lançamento' : 'Novo lançamento',
-    valores: { tipo: 'Despesa', data: hojeISO(), categoria: listas().categorias[0], pagamento: listas().pagamentos[0], cartao: listas().bancos[0], tipoCompra: 'À vista', numParcelas: 2, ...l, ...(duplicar ? { data: hojeISO() } : {}) },
+    valores: { tipo: 'Despesa', data: hojeISO(), categoria: listas().categorias.find(c => tipoCategoria(c) === (l.tipo || 'Despesa')) || listas().categorias[0], pagamento: listas().pagamentos[0], cartao: listas().bancos[0], tipoCompra: 'À vista', numParcelas: 2, ...l, ...(duplicar ? { data: hojeISO() } : {}) },
     campos: [
       { k: 'tipo', label: 'Tipo', tipo: 'seg', opcoes: [{ v: 'Despesa', t: 'Despesa' }, { v: 'Receita', t: 'Receita' }], req: true, full: true },
       { k: 'descricao', label: 'Descrição', req: true, full: true, ph: 'Ex.: Mercado, Salário', lista: descricoes },
@@ -928,7 +1003,7 @@ function formLancamento(l = {}, { duplicar = false } = {}) {
       { k: 'numParcelas', label: 'Nº de parcelas', tipo: 'number', req: true, mostrarSe: v => ehCredito(v) && v.tipoCompra === 'Parcelada', validar: v => (v < 2 || v > 60) ? 'Entre 2 e 60.' : null, hint: 'Informe o valor total da compra acima.' },
       { k: 'obs', label: 'Observação', full: true }
     ],
-    onChange: (k, v, set) => { if (k === 'descricao' && !editando) { const a = categoriaAprendida(v.descricao); if (a) { if (listas().categorias.includes(a.categoria)) set('categoria', a.categoria); if (a.pagamento) set('pagamento', a.pagamento); if (a.cartao && a.cartao !== '-') set('cartao', a.cartao); set('tipo', a.tipo || 'Despesa'); } } },
+    onChange: (k, v, set) => { if (k === 'tipo' && tipoCategoria(v.categoria) !== v.tipo) { const c = listas().categorias.find(x => tipoCategoria(x) === v.tipo); if (c) set('categoria', c); } if (k === 'descricao' && !editando) { const a = categoriaAprendida(v.descricao); if (a) { if (listas().categorias.includes(a.categoria)) set('categoria', a.categoria); if (a.pagamento) set('pagamento', a.pagamento); if (a.cartao && a.cartao !== '-') set('cartao', a.cartao); set('tipo', a.tipo || 'Despesa'); } } },
     onSalvar: async v => {
       const cred = ehCredito(v);
       const doc = { data: v.data, tipo: v.tipo, descricao: v.descricao, valor: Math.round(v.valor * 100) / 100, categoria: v.categoria, pagamento: v.pagamento, cartao: cred ? v.cartao : '-', tipoCompra: cred ? v.tipoCompra : 'À vista', numParcelas: cred && v.tipoCompra === 'Parcelada' ? Math.round(v.numParcelas) : 1 };
@@ -1104,11 +1179,12 @@ VIEWS.dashboard = {
   shell: () => `
     <section class="hero" id="dHero"></section>
     <div class="grid g-32">
-      <section class="card"><div class="card-h"><div><h3>Gastos por categoria</h3><p id="dCatSub"></p></div></div><div class="chart"><canvas id="cCat"></canvas></div></section>
+      <section class="card"><div class="card-h"><div><h3>Gastos por categoria</h3><p id="dCatSub"></p></div><span class="hint-click desk-only">Clique para ver os lançamentos</span></div>
+        <div class="donut-wrap"><div class="chart donut"><canvas id="cCat"></canvas><div class="donut-c" id="dCatC"></div></div><div class="cat-leg" id="dCatLeg"></div></div></section>
       <section class="card"><div class="card-h"><h3>Pontos de atenção</h3></div><div id="dIns"></div></section>
     </div>
     <div class="grid g-2">
-      <section class="card"><div class="card-h"><h3>Entradas x saídas · ${P.ano}</h3><div class="legend"><span><i style="background:${COR.entrada}"></i>Entradas</span><span><i style="background:${COR.saida}"></i>Saídas</span></div></div><div class="chart"><canvas id="cES"></canvas></div></section>
+      <section class="card"><div class="card-h"><div><h3>Entradas x saídas · ${P.ano}</h3><p>Clique em um mês para abri-lo</p></div><div class="legend"><span><i style="background:${COR.entrada}"></i>Entradas</span><span><i style="background:${COR.saida}"></i>Saídas</span></div></div><div class="chart"><canvas id="cES"></canvas></div></section>
       <section class="card"><div class="card-h"><div><h3>Saldo acumulado · ${P.ano}</h3><p>Entradas menos saídas, somadas mês a mês</p></div></div><div class="chart"><canvas id="cSaldo"></canvas></div></section>
     </div>
     <div class="grid g-2">
@@ -1127,32 +1203,48 @@ VIEWS.dashboard = {
     const dl = (atual, base, bomSobe = true) => { const d = varPct(atual, base); if (!d.base || !isFinite(d.v)) return ''; const r = d.v, c = r === 0 ? 'neutro' : ((r > 0) === bomSobe ? 'bom' : 'ruim'); return `<span class="delta ${c}">${r > 0 ? '▲' : r < 0 ? '▼' : '='} ${pct(Math.abs(r))}</span>`; };
     const taxa = a.E ? clamp(saldo / a.E, 0, 1) : 0, C2 = 2 * Math.PI * 48;
     $('#dHero').innerHTML = `
-      <div><div class="hero-l">Saldo de ${esc(rotPeriodo(pref))}</div><div class="hero-v" style="${saldo < 0 ? 'color:#fda4af' : ''}">${brl(saldo)}</div>
+      <div><div class="hero-l">Saldo de ${esc(rotPeriodo(pref))}</div><div class="hero-v" style="${saldo < 0 ? 'color:#ffaab2' : ''}">${brl(saldo)}</div>
         <div class="hero-n">${dl(saldo, saldoAnt)}<span>vs ${esc(rot)}</span></div></div>
       <div class="hero-st">
-        <div><span><i style="background:#34d399"></i>Entradas</span><b>${brl(a.E)}</b><small>${dl(a.E, b.E)} vs ${esc(rot)}</small></div>
-        <div><span><i style="background:#fb7185"></i>Saídas</span><b>${brl(a.G)}</b><small>${dl(a.G, b.G, false)} ${a.E ? pct(a.G / a.E) + ' da renda' : ''}</small></div>
-        <div><span><i style="background:var(--gold)"></i>Investido</span><b>${brl(invPer)}</b><small>Patrimônio ${brlCurto(patrimonioAte(pref.length === 4 ? pref + '-12' : pref))}</small></div>
+        <div><span><i style="background:#7fe0b0"></i>Entradas</span><b>${brl(a.E)}</b><small>${dl(a.E, b.E)} vs ${esc(rot)}</small></div>
+        <div><span><i style="background:#ffaab2"></i>Saídas</span><b>${brl(a.G)}</b><small>${dl(a.G, b.G, false)} ${a.E ? pct(a.G / a.E) + ' da renda' : ''}</small></div>
+        <div><span><i style="background:#8fb6ff"></i>Investido</span><b>${brl(invPer)}</b><small>Patrimônio ${brlCurto(patrimonioAte(pref.length === 4 ? pref + '-12' : pref))}</small></div>
       </div>
-      <div class="ring" title="Parte da renda que sobrou"><svg viewBox="0 0 112 112"><circle cx="56" cy="56" r="48" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="9"/><circle cx="56" cy="56" r="48" fill="none" stroke="${taxa >= .2 ? '#34d399' : taxa > 0 ? '#e2c27a' : '#fb7185'}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C2}" stroke-dashoffset="${C2 * (1 - taxa)}"/></svg><div><span><b>${pct(taxa)}</b><small>poupado</small></span></div></div>`;
+      <div class="ring" title="Parte da renda que sobrou"><svg viewBox="0 0 112 112"><circle cx="56" cy="56" r="48" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="9"/><circle cx="56" cy="56" r="48" fill="none" stroke="${taxa >= .2 ? '#7fe0b0' : taxa > 0 ? '#f3c26b' : '#ffaab2'}" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C2}" stroke-dashoffset="${C2 * (1 - taxa)}"/></svg><div><span><b>${pct(taxa)}</b><small>poupado</small></span></div></div>`;
 
     // categorias
     const ord = Object.entries(a.cat).sort((x, y) => y[1] - x[1]);
     const top = ord.slice(0, 7); if (ord.length > 7) top.push(['Outras', sum(ord.slice(7).map(x => x[1]))]);
     $('#dCatSub').textContent = a.G ? `${brl(a.G)} em ${ord.length} categoria${ord.length > 1 ? 's' : ''}` : '';
-    if (vazioGrafico('cCat', top.length ? '' : 'Sem gastos no período')) barrasH('cCat', top.map(x => x[0]), top.map(x => x[1]));
+    const cores = top.map((x, i) => x[0] === 'Outras' ? COR.serie[7] : COR.serie[i % 7]);
+    if (vazioGrafico('cCat', top.length ? '' : 'Sem gastos no período')) {
+      const abrir = cat => { if (cat === 'Outras') return; LST.cat = cat; LST.tipo = 'Despesa'; irPara('lancamentos'); };
+      grafico('cCat', { type: 'doughnut', data: { labels: top.map(x => x[0]), datasets: [{ data: top.map(x => x[1]), backgroundColor: cores, borderColor: '#fff', borderWidth: 3, hoverOffset: 8, borderRadius: 6, spacing: 1 }] },
+        options: { cutout: '74%', layout: { padding: 8 }, plugins: { tooltip: { callbacks: { label: c => ` ${brl(c.raw)} · ${pct(c.raw / a.G, 1)}` } } }, onHover: ponteiro, onClick: (e, els) => els.length && abrir(top[els[0].index][0]) } });
+      $('#dCatC').innerHTML = `<div><b>${brlCurto(a.G)}</b><span>em gastos</span></div>`;
+      $('#dCatLeg').innerHTML = top.map((x, i) => `<button data-i="${i}" title="${x[0] === 'Outras' ? '' : 'Ver lançamentos de ' + esc(x[0])}"><i style="background:${cores[i]}"></i><span class="nm">${esc(x[0])}</span><span class="vl">${brl(x[1])}</span><span class="pc">${pct(x[1] / a.G)}</span></button>`).join('');
+      $$('#dCatLeg button').forEach(bt => {
+        const i = +bt.dataset.i, ch = () => charts.cCat;
+        bt.onmouseenter = () => { const c = ch(); if (!c) return; c.setActiveElements([{ datasetIndex: 0, index: i }]); c.tooltip.setActiveElements([{ datasetIndex: 0, index: i }], { x: 0, y: 0 }); c.update(); };
+        bt.onmouseleave = () => { const c = ch(); if (!c) return; c.setActiveElements([]); c.tooltip.setActiveElements([], { x: 0, y: 0 }); c.update(); };
+        bt.onclick = () => abrir(top[i][0]);
+      });
+    } else { $('#dCatC').innerHTML = ''; $('#dCatLeg').innerHTML = ''; }
 
     // insights
     $('#dIns').innerHTML = gerarInsights(pref, a, b).map(i => `<div class="ins"><div class="ins-ic ${i.n}">${ic({ ok: 'ok', alerta: 'alert', critico: 'alert', info: 'info' }[i.n], 'ic-sm')}</div><div><b>${esc(i.t)}</b><p>${i.d}</p></div></div>`).join('');
 
     // séries anuais
     const s = serieMensal(P.ano);
-    grafico('cES', { type: 'bar', data: { labels: MES_C, datasets: [{ label: 'Entradas', data: s.e, backgroundColor: COR.entrada, borderRadius: 4, maxBarThickness: 18 }, { label: 'Saídas', data: s.s, backgroundColor: COR.saida, borderRadius: 4, maxBarThickness: 18 }] }, options: { scales: { y: eixoBRL, x: semGrade }, plugins: { tooltip: ttBRL }, interaction: { mode: 'index', intersect: false } } });
+    const mesSel = P.mes ? P.mes - 1 : -1, apag = (cor, i) => mesSel < 0 || i === mesSel ? cor : cor + '66';
+    grafico('cES', { type: 'bar', data: { labels: MES_C, datasets: [{ label: 'Entradas', data: s.e, backgroundColor: s.e.map((_, i) => apag(COR.entrada, i)), borderRadius: 6, borderSkipped: 'start', maxBarThickness: 16, categoryPercentage: .7, barPercentage: .85 }, { label: 'Saídas', data: s.s, backgroundColor: s.s.map((_, i) => apag(COR.saida, i)), borderRadius: 6, borderSkipped: 'start', maxBarThickness: 16, categoryPercentage: .7, barPercentage: .85 }] },
+      options: { scales: { y: eixoBRL, x: semGrade }, plugins: { tooltip: { ...ttBRL, callbacks: { ...ttBRL.callbacks, footer: it => { const e = it.find(x => x.datasetIndex === 0)?.raw || 0, sd = it.find(x => x.datasetIndex === 1)?.raw || 0; return e || sd ? `Saldo: ${brl(e - sd)}` : ''; } } } }, interaction: { mode: 'index', intersect: false }, onHover: ponteiro,
+        onClick: (e, els) => { if (!els.length) return; P.mes = els[0].index + 1; aoMudarPeriodo(); } } });
     let acc = 0; const ultimo = String(P.ano) === String(hj.getFullYear()) ? hj.getMonth() : 11;
     const ac = s.e.map((e, i) => { acc += e - s.s[i]; return i <= ultimo ? acc : null; });
-    grafico('cSaldo', { type: 'line', data: { labels: MES_C, datasets: [{ label: 'Saldo', data: ac, borderColor: COR.accent, backgroundColor: 'rgba(15,118,110,.08)', fill: true, tension: .3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: COR.accent, spanGaps: false }] }, options: { scales: { y: eixoBRL, x: semGrade }, plugins: { tooltip: ttBRL }, interaction: { mode: 'index', intersect: false } } });
+    areaLinha('cSaldo', MES_C, ac, 'Saldo acumulado', { onClick: (e, els) => { if (!els.length) return; P.mes = els[0].index + 1; aoMudarPeriodo(); } });
     const pg = Object.entries(a.pag).sort((x, y) => y[1] - x[1]);
-    if (vazioGrafico('cPag', pg.length ? '' : 'Sem gastos no período')) barrasH('cPag', pg.map(x => x[0]), pg.map(x => x[1]), '#64748b');
+    if (vazioGrafico('cPag', pg.length ? '' : 'Sem gastos no período')) barrasH('cPag', pg.map(x => x[0]), pg.map(x => x[1]));
 
     // compromissos
     const k = mesRef(), itens = [];
@@ -1204,6 +1296,7 @@ VIEWS.lancamentos = {
       <button class="btn" id="lImp">${ic('upload', 'ic-sm')}Importar do Excel</button>
       <button class="btn desk-only" id="lCsv">${ic('download', 'ic-sm')}CSV</button>
     </div>
+    <div id="fatPend"></div>
     <div id="impBox"></div>
     <div class="sumstrip" id="lRes"></div>
     <div id="lTab"></div>
@@ -1223,6 +1316,12 @@ VIEWS.lancamentos = {
       if (b.dataset.act === 'dup') formLancamento(l, { duplicar: true });
       if (b.dataset.act === 'del') excluirComDesfazer('lancamentos', l, 'Lançamento excluído');
     });
+    on(el, 'click', '[data-fat]', b => {
+      const f = FATURAS_PRONTAS.find(x => x.id === b.dataset.fat); if (!f) return;
+      if (b.dataset.acao === 'ocultar') { C().importados.push(f.id); salvarConfig(); return; }
+      IMP = { aberto: true, linhas: [], origem: f.id }; renderImport(); $('#impTxt').value = f.linhas; processarImport();
+      $('#impBox').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
     renderImport();
   },
   filtrados() {
@@ -1233,6 +1332,11 @@ VIEWS.lancamentos = {
     return r;
   },
   update() {
+    const pend = FATURAS_PRONTAS.filter(f => !C().importados.includes(f.id));
+    $('#fatPend').innerHTML = pend.map(f => `<div class="panel" style="margin-top:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--accent-weak);border-color:#cfdcf5">
+      <div style="width:38px;height:38px;border-radius:10px;background:#fff;display:grid;place-items:center;color:var(--accent)">${ic('card')}</div>
+      <div style="flex:1;min-width:200px"><h4>${esc(f.titulo)}</h4><p>${esc(f.resumo)} · pronta para revisar e importar</p></div>
+      <button class="btn btn-sm btn-ghost" data-fat="${f.id}" data-acao="ocultar">Já lancei</button><button class="btn btn-sm btn-primary" data-fat="${f.id}">Revisar e importar</button></div>`).join('');
     const r = this.filtrados();
     const E = sum(r.filter(l => l.tipo === 'Receita').map(l => l.valor)), G = sum(r.filter(l => l.tipo !== 'Receita').map(l => l.valor));
     $('#lRes').innerHTML = `<div>Entradas<b class="pos">${brl(E)}</b></div><div>Saídas<b class="neg">${brl(G)}</b></div><div>Saldo<b class="${E - G < 0 ? 'neg' : ''}">${brl(E - G)}</b></div><div>Lançamentos<b>${r.length}</b></div>`;
@@ -1340,6 +1444,7 @@ function renderImportPrev() {
     const b = $('#impSalvar'); b.disabled = true; b.textContent = 'Salvando…';
     try {
       await api.addMany(COL.lancamentos, lin.map(l => { const cred = ehCredito(l) && l.cartao !== '-'; return { data: l.data, tipo: l.tipo, descricao: l.descricao, valor: Math.round(l.valor * 100) / 100, categoria: l.categoria, pagamento: l.pagamento, cartao: cred ? l.cartao : '-', tipoCompra: cred && l.numParcelas > 1 ? 'Parcelada' : 'À vista', numParcelas: cred ? l.numParcelas : 1 }; }));
+      if (IMP.origem && !C().importados.includes(IMP.origem)) { C().importados.push(IMP.origem); salvarConfig({ render: false }); }
       IMP.linhas = IMP.linhas.filter(l => !l.sel); toast(`${lin.length} lançamento${lin.length > 1 ? 's' : ''} importado${lin.length > 1 ? 's' : ''}`);
       if (!IMP.linhas.length) IMP.aberto = false; renderImport();
     } catch (e) { console.error(e); toast('Erro ao salvar. ' + msgErro(e) + ' As linhas continuam na tela.', 'erro'); b.disabled = false; b.textContent = 'Tentar novamente'; }
@@ -1529,7 +1634,7 @@ VIEWS.investimentos = {
     $('#iK').innerHTML = kpi('Patrimônio', brl(pat), { delta: { ...varPct(pat, patAnt), rot: rotPrefCurto(prefixoAnterior(pref)) } }) +
       kpi('Aportes', brl(sum(per.filter(i => i.tipo === 'Aporte').map(i => i.valor)))) + kpi('Rendimentos', brl(sum(per.map(rendInv))), { cls: 'pos' }) + kpi('Resgates', brl(sum(per.filter(i => i.tipo === 'Resgate').map(i => i.valor))));
     const meses = Array.from({ length: 12 }, (_, i) => `${P.ano}-${pad2(i + 1)}`), ult = String(P.ano) === String(hj.getFullYear()) ? hj.getMonth() : 11;
-    grafico('cPat', { type: 'line', data: { labels: MES_C, datasets: [{ label: 'Patrimônio', data: meses.map((m, i) => i <= ult ? patrimonioAte(m) : null), borderColor: COR.accent, backgroundColor: 'rgba(15,118,110,.08)', fill: true, tension: .3, borderWidth: 2, pointRadius: 3, pointBackgroundColor: COR.accent }] }, options: { scales: { y: eixoBRL, x: semGrade }, plugins: { tooltip: ttBRL }, interaction: { mode: 'index', intersect: false } } });
+    areaLinha('cPat', MES_C, meses.map((m, i) => i <= ult ? patrimonioAte(m) : null), 'Patrimônio', { cor: COR.entrada, onClick: (e, els) => { if (!els.length) return; P.mes = els[0].index + 1; aoMudarPeriodo(); } });
     const porAtv = {}; D().investimentos.filter(i => (i.data || '').slice(0, 7) <= fim).forEach(i => porAtv[i.ativo || 'Outros'] = (porAtv[i.ativo || 'Outros'] || 0) + efeitoInv(i));
     const at = Object.entries(porAtv).filter(x => x[1] > 0.005).sort((a, b) => b[1] - a[1]);
     if (vazioGrafico('cAtv', at.length ? '' : 'Sem patrimônio registrado')) barrasH('cAtv', at.map(x => x[0]), at.map(x => x[1]));
@@ -1697,7 +1802,7 @@ VIEWS.mercado = {
     $('#mkI').innerHTML = ins.length ? ins.map(i => `<div class="ins"><div class="ins-ic ${i.n}">${ic({ ok: 'ok', alerta: 'alert', info: 'info' }[i.n], 'ic-sm')}</div><div><b>${esc(i.t)}</b><p>${i.d}</p></div></div>`).join('') : vazioHTML('Sem dados suficientes', 'Lance as compras de mercado de pelo menos dois meses.');
 
     const m12 = Array.from({ length: 12 }, (_, i) => addMes(ref, i - 11));
-    grafico('cMkM', { type: 'bar', data: { labels: m12.map(rotMes), datasets: [{ label: 'Gasto', data: m12.map(m => sum(Object.values(r).map(o => o[m]?.gasto || 0))), backgroundColor: m12.map(m => m === ref ? COR.accent : '#a7d3cc'), borderRadius: 4, maxBarThickness: 26 }] }, options: { scales: { y: eixoBRL, x: { ...semGrade, ticks: { maxRotation: 0, autoSkipPadding: 8 } } }, plugins: { tooltip: ttBRL } } });
+    grafico('cMkM', { type: 'bar', data: { labels: m12.map(rotMes), datasets: [{ label: 'Gasto', data: m12.map(m => sum(Object.values(r).map(o => o[m]?.gasto || 0))), backgroundColor: m12.map(m => m === ref ? COR.accent : COR.suave), hoverBackgroundColor: COR.accent, borderRadius: 8, borderSkipped: 'start', maxBarThickness: 24 }] }, options: { onHover: ponteiro, onClick: (e, els) => { if (!els.length) return; const k = m12[els[0].index]; P.ano = +k.slice(0, 4); P.mes = +k.slice(5, 7); aoMudarPeriodo(); }, scales: { y: eixoBRL, x: { ...semGrade, ticks: { maxRotation: 0, autoSkipPadding: 8 } } }, plugins: { tooltip: ttBRL } } });
     const t8 = tops.slice(0, 8); $('#mkTopSub').textContent = J ? (J === 1 ? rotMes(ref) : `${rotMes(ini)} – ${rotMes(ref)}`) : 'todo o histórico';
     if (vazioGrafico('cMkT', t8.length ? '' : 'Sem compras no período')) barrasH('cMkT', t8.map(x => nomes[x[0]]), t8.map(x => x[1]));
 
@@ -1729,7 +1834,8 @@ VIEWS.mercado = {
   precoChart() {
     const k = MST.prod, o = this._r?.[k]; if (!vazioGrafico('cMkP', o ? '' : 'Sem produtos')) return;
     const ms = Object.keys(o).sort();
-    grafico('cMkP', { type: 'line', data: { labels: ms.map(rotMes), datasets: [{ label: 'Preço médio', data: ms.map(m => o[m].qtd ? o[m].gasto / o[m].qtd : null), borderColor: COR.accent, borderWidth: 2, pointRadius: 4, pointBackgroundColor: COR.accent, tension: .25 }] }, options: { scales: { y: { ...eixoBRL, ticks: { callback: v => brl(v) } }, x: semGrade }, plugins: { tooltip: ttBRL } } });
+    areaLinha('cMkP', ms.map(rotMes), ms.map(m => o[m].qtd ? o[m].gasto / o[m].qtd : null), 'Preço médio', { cor: '#f3a26b', fmtY: v => brl(v) });
+    const cp = charts.cMkP; if (cp) { cp.data.datasets[0].pointRadius = 3; cp.data.datasets[0].pointBackgroundColor = '#f3a26b'; cp.update('none'); }
   }
 };
 function renderImportMerc() {
