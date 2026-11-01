@@ -259,6 +259,7 @@ textarea.input{height:auto;padding:9px 11px;resize:vertical;line-height:1.5}
 .chip button{border:0;background:none;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;color:var(--faint)}
 .chip button:hover{background:var(--surface-2);color:var(--text)}
 .chip button.del:hover{color:var(--neg)}
+.vermais{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:14px 0 2px;margin-top:4px;border-top:1px solid var(--border-2)}
 .imp-tbl .input,.imp-tbl .select{height:30px;font-size:12.5px;padding:0 7px;border-radius:7px;width:100%}
 .imp-tbl .select{padding-right:22px;background-position:right 6px center}
 .imp-tbl td{padding:4px 4px}
@@ -410,7 +411,7 @@ const CONFIG_DOC = ['config', 'app'];
 // Faturas já transcritas, prontas para revisar e importar (aparecem em Lançamentos até serem importadas)
 const FATURAS_PRONTAS = [
   { id: 'santander-2026-11', titulo: 'Fatura Santander · vencimento nov/2026', resumo: '102 lançamentos · R$ 8.245,94 (compras + encargos)',
-    linhas: "02/10/2026\tDespesa\tOTICAS DINIZ (05/05)\t605,18\tSaúde\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tMP *MENDESACESSOR (02/02)\t207,50\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n29/09/2026\tDespesa\tPADARIA BELA VISTA\t16,50\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n30/09/2026\tDespesa\tUNIMED PINDA LABORAT\t68,97\tSaúde\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t20,62\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tAMCC FEIRAS\t20,00\tMercado\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tGOJUICEPATIOPINDA\t17,50\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n04/10/2026\tDespesa\tEMPORIO JS DISTRIBID\t81,00\tMercado\tCrédito\tSantander Jeferson\tÀ vista\t1\n05/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t13,99\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n07/10/2026\tDespesa\tDILAN AUGUSTO DE LANES\t13,98\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n07/10/2026\tDespesa\tCORUJA LANCHES\t68,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n08/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t48,49\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n09/10/2026\tDespesa\tPADARIA FAMILIA ROQUE\t4,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n09/10/2026\tDespesa\tGME DROGARIA E PERFUM\t5,99\tSaúde\tCrédito\tSantander Jeferson\tÀ vista\t1\n10/10/2026\tDespesa\tMARCUSVINICIUSDA\t30,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n11/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t7,38\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n11/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t32,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n11/10/2026\tDespesa\tTENDA ATACADO S A\t203,50\tMercado\tCrédito\tSantander Jeferson\tÀ vista\t1\n12/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t20,18\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n13/10/2026\tDespesa\tSANTANA BEER\t5,50\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n13/10/2026\tDespesa\tPES E PATAS BRASIL COM\t17,90\tPets\tCrédito\tSantander Jeferson\tÀ vista\t1\n14/10/2026\tDespesa\tMARIANAAPARECIDA\t9,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n15/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t26,45\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n15/10/2026\tDespesa\tSOL LANCHES\t30,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t18,89\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tANALUIZAVIEIRA\t19,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tFABIANOANTONIO\t40,23\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tSANTANA BEER\t18,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n17/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t35,97\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n19/10/2026\tDespesa\tSANTANA BEER\t22,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n20/10/2026\tDespesa\tCASEIRO\t24,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n20/10/2026\tDespesa\tSANTANA BEER\t12,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t11,90\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tJOZEANO ALVES DE OLIVE\t7,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tCASEIRO\t40,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tSANTANA BEER\t15,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n24/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t11,97\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n24/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t12,90\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n26/10/2026\tDespesa\tANALUIZAVIEIRA\t36,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n27/10/2026\tDespesa\tMERCADO*MERCADOLIVRE (11/12)\t124,08\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n09/10/2026\tDespesa\tHOTEL FAZENDA RAMON (09/10)\t212,20\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n07/10/2026\tDespesa\tEBN *CRUNCHYROLL (05/12)\t14,90\tAssinaturas\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tMERCADO*MERCADOLIVRE (05/10)\t123,30\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n04/10/2026\tDespesa\tVINDI *ALCAFIL (04/05)\t71,38\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tMERCADOLIVRE*MERCADOL (04/08)\t54,55\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tMERCADOLIVRE*MERCADOL (04/06)\t50,66\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n14/10/2026\tDespesa\tMERCADO*MERCADOLIVRE (01/10)\t299,50\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n20/10/2026\tDespesa\tAMAZON BR *AMAZON BR (01/02)\t52,15\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/09/2026\tDespesa\tHDI SEGUROS SA\t264,33\tDespesas Carro\tCrédito\tSantander Jeferson\tÀ vista\t1\n05/10/2026\tDespesa\tAMAZONMKTPLC*AMAZON BR\t36,63\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n05/10/2026\tDespesa\tAMAZONMKTPLC*IRENECRIS\t24,99\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n13/10/2026\tDespesa\tIFD*RESTAURANTE CASEIR\t21,39\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n14/10/2026\tDespesa\tMERCADOLIVRE*MERCADOL\t355,21\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n19/10/2026\tDespesa\tIFD*55 339 523 RENATA\t52,25\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tGOOGLE PRIME VIDEO\t19,90\tAssinaturas\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tEBN*SPOTIFY\t31,90\tAssinaturas\tCrédito\tSantander Jeferson\tÀ vista\t1\n01/10/2026\tDespesa\tOTICA GHISSI (05/05)\t112,00\tSaúde\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\t00268 SH PATIO PINDA (02/03)\t173,28\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\t00268 SH PATIO PINDA (02/03)\t101,97\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tOSCAR CALCADOS (01/02)\t55,00\tVestuário\tCrédito\tSantander Thayna\tÀ vista\t1\n27/09/2026\tDespesa\tMANA POKE TAUBATE\t134,70\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n27/09/2026\tDespesa\t211 SHIBATA\t33,39\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n27/09/2026\tDespesa\tPADARIA FAMILIA ROQUE\t40,50\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n29/09/2026\tDespesa\tTENDA ATACADO S A\t202,61\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n29/09/2026\tDespesa\tV Z Z N SANTOS\t20,80\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n02/10/2026\tDespesa\t211 SHIBATA\t1011,61\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tPAREBEM\t11,00\tDespesas Carro\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tSUBWAY PATIO PINDA\t69,00\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tZUCH MIX\t44,00\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tREDECINE\t72,00\tLazer\tCrédito\tSantander Thayna\tÀ vista\t1\n04/10/2026\tDespesa\tTENDA ATACADO S A\t206,93\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n06/10/2026\tDespesa\tAPPLE COM/BILL\t5,90\tAssinaturas\tCrédito\tSantander Thayna\tÀ vista\t1\n06/10/2026\tDespesa\tMASTER CA\t2,00\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n08/10/2026\tDespesa\tCACAU SHOW\t69,99\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n09/10/2026\tDespesa\tYAZUSUSHI\t295,57\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n10/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t16,74\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n15/10/2026\tDespesa\tGOCASH *ESTRELA DE PIN\t162,47\tCombustível\tCrédito\tSantander Thayna\tÀ vista\t1\n17/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t40,95\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n17/10/2026\tDespesa\tTENDA ATACADO S A\t197,09\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n17/10/2026\tDespesa\tGOCASH *ESTRELA DE PIN\t315,15\tCombustível\tCrédito\tSantander Thayna\tÀ vista\t1\n18/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t21,16\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tBRUNA CAROLINE TACCOL\t26,50\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t21,89\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tTHC ALIMENTOS\t151,96\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n21/10/2026\tDespesa\tPADARIA BELA VISTA\t13,50\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n22/10/2026\tDespesa\tPADARIA BELA VISTA\t41,50\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n23/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t15,45\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n24/10/2026\tDespesa\tCASA DO PAO DOCE\t48,00\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n24/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t24,94\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n24/10/2026\tDespesa\t211 SHIBATA\t202,92\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n25/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t6,58\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n25/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t45,34\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n01/10/2026\tDespesa\tAMAZON BR (04/04)\t37,80\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tAMAZON BR (04/05)\t36,02\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n28/10/2026\tDespesa\tDAFITI*4606532058 (03/03)\t68,13\tVestuário\tCrédito\tSantander Thayna\tÀ vista\t1\n28/10/2026\tDespesa\tAMAZONMKTPLC*AMAZON BR (03/03)\t63,03\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n28/10/2026\tDespesa\tAMAZON BR *AMAZON BR (02/05)\t45,58\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n05/10/2026\tDespesa\tSHOPEE *DIEUFORTSTORE (01/03)\t69,70\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - JUROS REMUNERATÓRIOS\t57,59\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - IOF\t23,38\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - JUROS DE MORA\t2,04\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - MULTA POR ATRASO\t120,47\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1" }
+    linhas: "28/10/2026\tDespesa\tOTICAS DINIZ\t605,18\tSaúde\tCrédito\tSantander Jeferson\tParcelada\t05/05\n28/10/2026\tDespesa\tMP *MENDESACESSOR\t207,50\tOutros\tCrédito\tSantander Jeferson\tParcelada\t02/02\n29/09/2026\tDespesa\tPADARIA BELA VISTA\t16,50\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n30/09/2026\tDespesa\tUNIMED PINDA LABORAT\t68,97\tSaúde\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t20,62\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tAMCC FEIRAS\t20,00\tMercado\tCrédito\tSantander Jeferson\tÀ vista\t1\n03/10/2026\tDespesa\tGOJUICEPATIOPINDA\t17,50\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n04/10/2026\tDespesa\tEMPORIO JS DISTRIBID\t81,00\tMercado\tCrédito\tSantander Jeferson\tÀ vista\t1\n05/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t13,99\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n07/10/2026\tDespesa\tDILAN AUGUSTO DE LANES\t13,98\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n07/10/2026\tDespesa\tCORUJA LANCHES\t68,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n08/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t48,49\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n09/10/2026\tDespesa\tPADARIA FAMILIA ROQUE\t4,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n09/10/2026\tDespesa\tGME DROGARIA E PERFUM\t5,99\tSaúde\tCrédito\tSantander Jeferson\tÀ vista\t1\n10/10/2026\tDespesa\tMARCUSVINICIUSDA\t30,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n11/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t7,38\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n11/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t32,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n11/10/2026\tDespesa\tTENDA ATACADO S A\t203,50\tMercado\tCrédito\tSantander Jeferson\tÀ vista\t1\n12/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t20,18\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n13/10/2026\tDespesa\tSANTANA BEER\t5,50\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n13/10/2026\tDespesa\tPES E PATAS BRASIL COM\t17,90\tPets\tCrédito\tSantander Jeferson\tÀ vista\t1\n14/10/2026\tDespesa\tMARIANAAPARECIDA\t9,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n15/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t26,45\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n15/10/2026\tDespesa\tSOL LANCHES\t30,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t18,89\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tANALUIZAVIEIRA\t19,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tFABIANOANTONIO\t40,23\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n16/10/2026\tDespesa\tSANTANA BEER\t18,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n17/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t35,97\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n19/10/2026\tDespesa\tSANTANA BEER\t22,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n20/10/2026\tDespesa\tCASEIRO\t24,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n20/10/2026\tDespesa\tSANTANA BEER\t12,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t11,90\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tJOZEANO ALVES DE OLIVE\t7,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tCASEIRO\t40,00\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tSANTANA BEER\t15,00\tLazer\tCrédito\tSantander Jeferson\tÀ vista\t1\n24/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t11,97\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n24/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t12,90\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n26/10/2026\tDespesa\tANALUIZAVIEIRA\t36,00\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tMERCADO*MERCADOLIVRE\t124,08\tOutros\tCrédito\tSantander Jeferson\tParcelada\t11/12\n28/10/2026\tDespesa\tHOTEL FAZENDA RAMON\t212,20\tLazer\tCrédito\tSantander Jeferson\tParcelada\t09/10\n28/10/2026\tDespesa\tEBN *CRUNCHYROLL\t14,90\tAssinaturas\tCrédito\tSantander Jeferson\tParcelada\t05/12\n28/10/2026\tDespesa\tMERCADO*MERCADOLIVRE\t123,30\tOutros\tCrédito\tSantander Jeferson\tParcelada\t05/10\n28/10/2026\tDespesa\tVINDI *ALCAFIL\t71,38\tOutros\tCrédito\tSantander Jeferson\tParcelada\t04/05\n28/10/2026\tDespesa\tMERCADOLIVRE*MERCADOL\t54,55\tOutros\tCrédito\tSantander Jeferson\tParcelada\t04/08\n28/10/2026\tDespesa\tMERCADOLIVRE*MERCADOL\t50,66\tOutros\tCrédito\tSantander Jeferson\tParcelada\t04/06\n28/10/2026\tDespesa\tMERCADO*MERCADOLIVRE\t299,50\tOutros\tCrédito\tSantander Jeferson\tParcelada\t01/10\n28/10/2026\tDespesa\tAMAZON BR *AMAZON BR\t52,15\tOutros\tCrédito\tSantander Jeferson\tParcelada\t01/02\n28/09/2026\tDespesa\tHDI SEGUROS SA\t264,33\tDespesas Carro\tCrédito\tSantander Jeferson\tÀ vista\t1\n05/10/2026\tDespesa\tAMAZONMKTPLC*AMAZON BR\t36,63\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n05/10/2026\tDespesa\tAMAZONMKTPLC*IRENECRIS\t24,99\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n13/10/2026\tDespesa\tIFD*RESTAURANTE CASEIR\t21,39\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n14/10/2026\tDespesa\tMERCADOLIVRE*MERCADOL\t355,21\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n19/10/2026\tDespesa\tIFD*55 339 523 RENATA\t52,25\tAlimentação\tCrédito\tSantander Jeferson\tÀ vista\t1\n22/10/2026\tDespesa\tGOOGLE PRIME VIDEO\t19,90\tAssinaturas\tCrédito\tSantander Jeferson\tÀ vista\t1\n23/10/2026\tDespesa\tEBN*SPOTIFY\t31,90\tAssinaturas\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tOTICA GHISSI\t112,00\tSaúde\tCrédito\tSantander Thayna\tParcelada\t05/05\n28/10/2026\tDespesa\t00268 SH PATIO PINDA\t173,28\tOutros\tCrédito\tSantander Thayna\tParcelada\t02/03\n28/10/2026\tDespesa\t00268 SH PATIO PINDA\t101,97\tOutros\tCrédito\tSantander Thayna\tParcelada\t02/03\n28/10/2026\tDespesa\tOSCAR CALCADOS\t55,00\tVestuário\tCrédito\tSantander Thayna\tParcelada\t01/02\n27/09/2026\tDespesa\tMANA POKE TAUBATE\t134,70\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n27/09/2026\tDespesa\t211 SHIBATA\t33,39\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n27/09/2026\tDespesa\tPADARIA FAMILIA ROQUE\t40,50\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n29/09/2026\tDespesa\tTENDA ATACADO S A\t202,61\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n29/09/2026\tDespesa\tV Z Z N SANTOS\t20,80\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n02/10/2026\tDespesa\t211 SHIBATA\t1011,61\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tPAREBEM\t11,00\tDespesas Carro\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tSUBWAY PATIO PINDA\t69,00\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tZUCH MIX\t44,00\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n03/10/2026\tDespesa\tREDECINE\t72,00\tLazer\tCrédito\tSantander Thayna\tÀ vista\t1\n04/10/2026\tDespesa\tTENDA ATACADO S A\t206,93\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n06/10/2026\tDespesa\tAPPLE COM/BILL\t5,90\tAssinaturas\tCrédito\tSantander Thayna\tÀ vista\t1\n06/10/2026\tDespesa\tMASTER CA\t2,00\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n08/10/2026\tDespesa\tCACAU SHOW\t69,99\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n09/10/2026\tDespesa\tYAZUSUSHI\t295,57\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n10/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t16,74\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n15/10/2026\tDespesa\tGOCASH *ESTRELA DE PIN\t162,47\tCombustível\tCrédito\tSantander Thayna\tÀ vista\t1\n17/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t40,95\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n17/10/2026\tDespesa\tTENDA ATACADO S A\t197,09\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n17/10/2026\tDespesa\tGOCASH *ESTRELA DE PIN\t315,15\tCombustível\tCrédito\tSantander Thayna\tÀ vista\t1\n18/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t21,16\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tBRUNA CAROLINE TACCOL\t26,50\tOutros\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t21,89\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n20/10/2026\tDespesa\tTHC ALIMENTOS\t151,96\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n21/10/2026\tDespesa\tPADARIA BELA VISTA\t13,50\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n22/10/2026\tDespesa\tPADARIA BELA VISTA\t41,50\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n23/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t15,45\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n24/10/2026\tDespesa\tCASA DO PAO DOCE\t48,00\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n24/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t24,94\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n24/10/2026\tDespesa\t211 SHIBATA\t202,92\tMercado\tCrédito\tSantander Thayna\tÀ vista\t1\n25/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t6,58\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n25/10/2026\tDespesa\tPADARIA E MERCEARIA AV\t45,34\tAlimentação\tCrédito\tSantander Thayna\tÀ vista\t1\n28/10/2026\tDespesa\tAMAZON BR\t37,80\tOutros\tCrédito\tSantander Thayna\tParcelada\t04/04\n28/10/2026\tDespesa\tAMAZON BR\t36,02\tOutros\tCrédito\tSantander Thayna\tParcelada\t04/05\n28/10/2026\tDespesa\tDAFITI*4606532058\t68,13\tVestuário\tCrédito\tSantander Thayna\tParcelada\t03/03\n28/10/2026\tDespesa\tAMAZONMKTPLC*AMAZON BR\t63,03\tOutros\tCrédito\tSantander Thayna\tParcelada\t03/03\n28/10/2026\tDespesa\tAMAZON BR *AMAZON BR\t45,58\tOutros\tCrédito\tSantander Thayna\tParcelada\t02/05\n28/10/2026\tDespesa\tSHOPEE *DIEUFORTSTORE\t69,70\tOutros\tCrédito\tSantander Thayna\tParcelada\t01/03\n28/10/2026\tDespesa\tENCARGOS FATURA - JUROS REMUNERATÓRIOS\t57,59\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - IOF\t23,38\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - JUROS DE MORA\t2,04\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1\n28/10/2026\tDespesa\tENCARGOS FATURA - MULTA POR ATRASO\t120,47\tOutros\tCrédito\tSantander Jeferson\tÀ vista\t1" }
 ];   // configurações compartilhadas entre os dois celulares
 const DEMO = new URLSearchParams(location.search).has('demo');
 const LS = DEMO ? 'demo_' : '';
@@ -435,7 +436,7 @@ const CONFIG_PADRAO = {
   },
   planejamento: {},
   desejos: { guardado: 0, fonte: 'fixo', mensal: 0 },
-  prefs: { parcelas: 'compra' }
+  prefs: { parcelas: 'compra', valorParcelado: 'total' }
 };
 
 /* =====================================================================
@@ -494,6 +495,10 @@ const lsGet = k => { try { return JSON.parse(localStorage.getItem(k)); } catch {
 const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } };
 const ehCredito = l => /cr[eé]dito/i.test(l?.pagamento || '');
 const nParc = l => Math.max(1, parseInt(l?.numParcelas, 10) || 1);
+// Parcela lançada a partir da fatura: tem "parcelaAtual" e o valor é o da parcela (ex.: 05/10 de R$ 123,30)
+const parcAtual = l => { const x = parseInt(l?.parcelaAtual, 10) || 0; return x > 0 && nParc(l) > 1 ? Math.min(x, nParc(l)) : 0; };
+const RE_PARC = /\s*[\(\[]?\s*(\d{1,2})\s*\/\s*(\d{1,2})\s*[\)\]]?\s*$/;   // "LOJA (05/10)" ou "LOJA 05/10" no fim da descrição
+const lerParcela = s => { const m = String(s || '').trim().match(/^(\d{1,2})\s*\/\s*(\d{1,2})$/); if (!m) return null; const x = +m[1], n = +m[2]; return n >= 2 && x >= 1 && x <= n ? { x, n } : null; };
 const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 
 /* Ícones (SVG inline, sem dependência externa) */
@@ -666,10 +671,12 @@ const D = () => S.data;
 const listas = () => C().listas;
 
 // Como um lançamento entra no mês: valor total na data da compra (padrão) ou parcelas distribuídas
+const valorParcela = l => (parcAtual(l) || C().prefs.valorParcelado === 'parcela') ? (Number(l.valor) || 0) : (Number(l.valor) || 0) / nParc(l);
 function contribs(l) {
   const k = (l.data || '').slice(0, 7); if (!k) return [];
   const v = Number(l.valor) || 0, n = nParc(l);
-  if (C().prefs.parcelas === 'parcela' && n > 1) return Array.from({ length: n }, (_, i) => ({ k: addMes(k, i), v: v / n }));
+  if (parcAtual(l)) return [{ k, v }];   // parcela da fatura: conta no mês em que foi cobrada
+  if (C().prefs.parcelas === 'parcela' && n > 1) return Array.from({ length: n }, (_, i) => ({ k: addMes(k, i), v: valorParcela(l) }));
   return [{ k, v }];
 }
 function agregados(pref) {
@@ -722,13 +729,32 @@ function vencimentoInicial(l) {
   return venc > fech ? fechaEm : addMes(fechaEm, 1);
 }
 function parcelasDe(l) {
-  const n = nParc(l), v = (Number(l.valor) || 0) / n, k0 = vencimentoInicial(l);
+  const n = nParc(l), v = valorParcela(l), k0 = vencimentoInicial(l), x = parcAtual(l);
+  if (x) return Array.from({ length: n - x + 1 }, (_, j) => ({ k: addMes(k0, j), v, i: x + j, n }));   // desta fatura em diante
   return Array.from({ length: n }, (_, i) => ({ k: addMes(k0, i), v, i: i + 1, n }));
+}
+// Agrupa as parcelas de uma mesma compra lançadas em faturas diferentes (ex.: 05/10 em out e 06/10 em nov)
+const chaveCompra = l => `${l.cartao}|${norm(String(l.descricao || '').replace(RE_PARC, ''))}|${nParc(l)}|${valorParcela(l).toFixed(2)}`;
+function parcelamentos() {
+  const grupos = {};
+  for (const l of comprasCartao()) {
+    if (nParc(l) < 2) continue;
+    if (!parcAtual(l)) { grupos['id:' + l.id] = { ult: l, todos: [l] }; continue; }
+    const g = (grupos[chaveCompra(l)] ||= { ult: l, todos: [] }); g.todos.push(l);
+    if (parcAtual(l) > parcAtual(g.ult)) g.ult = l;
+  }
+  return Object.values(grupos);
 }
 function comprasCartao() { return D().lancamentos.filter(l => l.tipo !== 'Receita' && ehCredito(l) && l.cartao && l.cartao !== '-' && l.data); }
 function faturas() {
-  const f = {};
-  for (const l of comprasCartao()) for (const p of parcelasDe(l)) { const c = (f[l.cartao] ||= {}); c[p.k] = (c[p.k] || 0) + p.v; }
+  const f = {}, soma = (c, k, v) => { const o = (f[c] ||= {}); o[k] = (o[k] || 0) + v; };
+  const ultimos = new Set(parcelamentos().map(g => g.ult));
+  for (const l of comprasCartao()) {
+    if (!parcAtual(l)) { for (const p of parcelasDe(l)) soma(l.cartao, p.k, p.v); continue; }
+    const ps = parcelasDe(l);
+    soma(l.cartao, ps[0].k, ps[0].v);                                   // a parcela cobrada nesta fatura
+    if (ultimos.has(l)) ps.slice(1).forEach(p => soma(l.cartao, p.k, p.v)); // as futuras, só a partir da parcela mais recente
+  }
   return f;
 }
 function cartoesAtivos() {
@@ -895,13 +921,29 @@ function vazioGrafico(id, msg) {
   return !msg;
 }
 const destruirGraficos = () => Object.keys(charts).forEach(k => { charts[k].destroy(); delete charts[k]; });
-const eixoBRL = { ticks: { callback: v => brlCurto(v), maxTicksLimit: 6, padding: 8 }, grid: { color: COR.grid, drawTicks: false }, border: { display: false } };
+const eixoBRL = { beginAtZero: true, suggestedMax: 1000, ticks: { callback: v => brlCurto(v), maxTicksLimit: 6, padding: 8 }, grid: { color: COR.grid, drawTicks: false }, border: { display: false } };
 const semGrade = { grid: { display: false }, border: { display: false } };
 const ttBRL = { callbacks: { label: c => ` ${c.dataset.label ? c.dataset.label + ': ' : ''}${brl(c.raw)}` } };
 function barrasH(id, labels, data, cor = '#6f8fcf') {
   const box = document.getElementById(id)?.parentElement; if (box) box.style.height = Math.max(150, labels.length * 32 + 30) + 'px';
   grafico(id, { type: 'bar', data: { labels, datasets: [{ data, backgroundColor: cor, hoverBackgroundColor: COR.accent, borderRadius: 8, barThickness: 14, borderSkipped: 'start' }] }, options: { indexAxis: 'y', scales: { x: { ...eixoBRL, ticks: { ...eixoBRL.ticks, maxTicksLimit: 5, maxRotation: 0 } }, y: { ...semGrade, ticks: { color: '#55546a' } } }, plugins: { tooltip: ttBRL } } });
 }
+/* "Ver mais": listas longas mostram poucos itens por vez */
+const LIM = {}, PASSO = { padrao: 15, imp: 20 }, RERENDER = {};
+const passo = k => PASSO[k] || PASSO.padrao;
+function paginar(k, arr) { const lim = LIM[k] || passo(k); return { vis: arr.slice(0, lim), resto: Math.max(0, arr.length - lim), total: arr.length, lim }; }
+function verMaisHTML(k, pg) {
+  if (pg.total <= passo(k)) return '';
+  return `<div class="vermais">${pg.resto ? `<button class="btn btn-sm" data-vermais="${k}">${ic('chevD', 'ic-sm')}Ver mais ${Math.min(passo(k), pg.resto)}</button>` : ''}${pg.lim > passo(k) ? `<button class="btn btn-sm btn-ghost" data-vermenos="${k}">${ic('chevU', 'ic-sm')}Mostrar menos</button>` : ''}<span class="small muted">Mostrando ${pg.vis.length} de ${pg.total}</span>${pg.resto > passo(k) ? `<button class="btn btn-sm btn-ghost" data-vertudo="${k}">Ver todos</button>` : ''}</div>`;
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-vermais],[data-vermenos],[data-vertudo]'); if (!b) return;
+  const k = b.dataset.vermais || b.dataset.vermenos || b.dataset.vertudo;
+  if (b.dataset.vermais) LIM[k] = (LIM[k] || passo(k)) + passo(k);
+  else if (b.dataset.vertudo) LIM[k] = 1e6;
+  else { delete LIM[k]; b.closest('.card,.panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  (RERENDER[k] || (() => VIEWS[S.aba].update($('#view'))))();
+});
 const vazioHTML = (t, d = '') => `<div class="empty"><b>${esc(t)}</b>${esc(d)}</div>`;
 
 /* =====================================================================
@@ -941,7 +983,7 @@ function montarNav() {
   window.addEventListener('scroll', () => $('#topbar').classList.toggle('scrolled', scrollY > 4), { passive: true });
 }
 function navPeriodo(d) { if (!P.mes) P.ano += d; else { const k = addMes(prefixo(), d); P.ano = +k.slice(0, 4); P.mes = +k.slice(5, 7); } aoMudarPeriodo(); }
-function aoMudarPeriodo() { sincPeriodo(); destruirGraficos(); montarAba(); }
+function aoMudarPeriodo() { Object.keys(LIM).forEach(k => delete LIM[k]); sincPeriodo(); destruirGraficos(); montarAba(); }
 function anosDisponiveis() {
   const s = new Set([hj.getFullYear() - 1, hj.getFullYear(), hj.getFullYear() + 1, P.ano]);
   ['lancamentos', 'mercado', 'investimentos'].forEach(c => D()[c].forEach(i => { const a = +(i.data || '').slice(0, 4); if (a > 1990) s.add(a); }));
@@ -964,6 +1006,7 @@ function sincPeriodo() {
 }
 function acaoNovo() { VIEWS[S.aba]?.novo?.fn(); }
 function irPara(id) {
+  Object.keys(LIM).forEach(k => k !== 'imp' && delete LIM[k]);
   if (!VIEWS[id]) id = 'dashboard';
   S.aba = id; lsSet(LS + 'fin_aba', id);
   $$('.nav-i').forEach(b => b.classList.toggle('on', b.dataset.aba === id));
@@ -1000,13 +1043,16 @@ function formLancamento(l = {}, { duplicar = false } = {}) {
       { k: 'pagamento', label: 'Forma de pagamento', tipo: 'select', opcoes: () => listas().pagamentos, req: true },
       { k: 'cartao', label: 'Cartão', tipo: 'select', opcoes: () => listas().bancos, req: true, mostrarSe: v => ehCredito(v) },
       { k: 'tipoCompra', label: 'Compra', tipo: 'seg', opcoes: ['À vista', 'Parcelada'], req: true, mostrarSe: v => ehCredito(v) },
-      { k: 'numParcelas', label: 'Nº de parcelas', tipo: 'number', req: true, mostrarSe: v => ehCredito(v) && v.tipoCompra === 'Parcelada', validar: v => (v < 2 || v > 60) ? 'Entre 2 e 60.' : null, hint: 'Informe o valor total da compra acima.' },
+      { k: 'numParcelas', label: 'Nº de parcelas', tipo: 'number', req: true, mostrarSe: v => ehCredito(v) && v.tipoCompra === 'Parcelada', validar: v => (v < 2 || v > 60) ? 'Entre 2 e 60.' : null },
+      { k: 'parcelaAtual', label: 'Parcela desta fatura', tipo: 'number', mostrarSe: v => ehCredito(v) && v.tipoCompra === 'Parcelada', validar: (v, t) => !isNaN(v) && (v < 1 || v > t.numParcelas) ? `Entre 1 e ${t.numParcelas || '…'}.` : null,
+        hint: 'Lançando pela fatura? Informe a parcela (ex.: 5) e, no Valor, o valor da parcela. Deixe vazio para informar o valor total da compra.' },
       { k: 'obs', label: 'Observação', full: true }
     ],
     onChange: (k, v, set) => { if (k === 'tipo' && tipoCategoria(v.categoria) !== v.tipo) { const c = listas().categorias.find(x => tipoCategoria(x) === v.tipo); if (c) set('categoria', c); } if (k === 'descricao' && !editando) { const a = categoriaAprendida(v.descricao); if (a) { if (listas().categorias.includes(a.categoria)) set('categoria', a.categoria); if (a.pagamento) set('pagamento', a.pagamento); if (a.cartao && a.cartao !== '-') set('cartao', a.cartao); set('tipo', a.tipo || 'Despesa'); } } },
     onSalvar: async v => {
       const cred = ehCredito(v);
       const doc = { data: v.data, tipo: v.tipo, descricao: v.descricao, valor: Math.round(v.valor * 100) / 100, categoria: v.categoria, pagamento: v.pagamento, cartao: cred ? v.cartao : '-', tipoCompra: cred ? v.tipoCompra : 'À vista', numParcelas: cred && v.tipoCompra === 'Parcelada' ? Math.round(v.numParcelas) : 1 };
+      if (cred && v.tipoCompra === 'Parcelada' && v.parcelaAtual > 0) doc.parcelaAtual = Math.round(v.parcelaAtual); else if (editando && l.parcelaAtual) doc.parcelaAtual = 0;
       if (v.obs) doc.obs = v.obs; else if (editando && l.obs) doc.obs = '';
       if (editando) await api.update(COL.lancamentos, l.id, doc); else await api.add(COL.lancamentos, doc);
       toast(editando ? 'Lançamento atualizado' : 'Lançamento salvo');
@@ -1302,7 +1348,7 @@ VIEWS.lancamentos = {
     <div id="lTab"></div>
   </section>`,
   bind(el) {
-    const ref = () => this.update(el);
+    const ref = () => { delete LIM.lanc; this.update(el); };
     $('#lBusca').oninput = e => { LST.busca = e.target.value; ref(); };
     $('#lTipo').onchange = e => { LST.tipo = e.target.value; ref(); };
     $('#lCat').onchange = e => { LST.cat = e.target.value; ref(); };
@@ -1341,14 +1387,16 @@ VIEWS.lancamentos = {
     const E = sum(r.filter(l => l.tipo === 'Receita').map(l => l.valor)), G = sum(r.filter(l => l.tipo !== 'Receita').map(l => l.valor));
     $('#lRes').innerHTML = `<div>Entradas<b class="pos">${brl(E)}</b></div><div>Saídas<b class="neg">${brl(G)}</b></div><div>Saldo<b class="${E - G < 0 ? 'neg' : ''}">${brl(E - G)}</b></div><div>Lançamentos<b>${r.length}</b></div>`;
     if (!r.length) { $('#lTab').innerHTML = vazioHTML('Nenhum lançamento encontrado', LST.busca || LST.cat || LST.tipo ? 'Ajuste os filtros.' : `Não há lançamentos em ${rotPeriodo(prefixo())}.`); return; }
+    const pgL = paginar('lanc', r);
     const seta = k => LST.ord === k ? (LST.dir > 0 ? ' ↑' : ' ↓') : '';
-    const pagTxt = l => { const n = nParc(l); return `${esc(l.pagamento || '–')}${l.cartao && l.cartao !== '-' ? `<div class="sub">${esc(l.cartao)}${n > 1 ? ` · ${n}x de ${brl(l.valor / n)}` : ''}</div>` : ''}`; };
+    const parcTxt = l => { const n = nParc(l); return n < 2 ? '' : parcAtual(l) ? ` · parcela ${parcAtual(l)}/${n}` : ` · ${n}x de ${brl(valorParcela(l))}`; };
+    const pagTxt = l => `${esc(l.pagamento || '–')}${l.cartao && l.cartao !== '-' ? `<div class="sub">${esc(l.cartao)}${parcTxt(l)}</div>` : ''}`;
     const acts = l => `<div class="acts"><button class="btn-icon" data-act="edit" data-id="${l.id}" title="Editar">${ic('edit', 'ic-sm')}</button><button class="btn-icon" data-act="dup" data-id="${l.id}" title="Duplicar">${ic('copy', 'ic-sm')}</button><button class="btn-icon danger" data-act="del" data-id="${l.id}" title="Excluir">${ic('trash', 'ic-sm')}</button></div>`;
     const val = l => `<span class="${l.tipo === 'Receita' ? 'pos' : ''}">${l.tipo === 'Receita' ? '+' : '−'} ${brl(l.valor)}</span>`;
     $('#lTab').innerHTML = `<div class="tbl-w desk-only"><table class="tbl"><thead><tr>
         <th class="sort" data-ord="data">Data${seta('data')}</th><th class="sort" data-ord="descricao">Descrição${seta('descricao')}</th><th class="sort" data-ord="categoria">Categoria${seta('categoria')}</th><th>Pagamento</th><th class="sort n" data-ord="valor">Valor${seta('valor')}</th><th></th></tr></thead>
-      <tbody>${r.map(l => `<tr><td class="muted num">${fmtData(l.data)}</td><td><div style="font-weight:500">${esc(l.descricao)}</div>${l.obs ? `<div class="sub">${esc(l.obs)}</div>` : ''}</td><td><span class="tag">${esc(l.categoria)}</span></td><td>${pagTxt(l)}</td><td class="n" style="font-weight:600">${val(l)}</td><td>${acts(l)}</td></tr>`).join('')}</tbody></table></div>
-      <div class="mob-only">${r.map(l => `<div class="lcard"><div class="datebox"><b>${l.data.slice(8, 10)}</b><span>${MES_C[+l.data.slice(5, 7) - 1]}</span></div><div class="li-main"><div class="li-t">${esc(l.descricao)}</div><div class="li-s">${esc(l.categoria)} · ${esc(l.cartao && l.cartao !== '-' ? l.cartao : l.pagamento)}${nParc(l) > 1 ? ` · ${nParc(l)}x` : ''}</div></div><div style="text-align:right"><div class="li-v">${val(l)}</div><div class="acts">${acts(l).replace('<div class="acts">', '').replace(/<\/div>$/, '')}</div></div></div>`).join('')}</div>`;
+      <tbody>${pgL.vis.map(l => `<tr><td class="muted num">${fmtData(l.data)}</td><td><div style="font-weight:500">${esc(l.descricao)}</div>${l.obs ? `<div class="sub">${esc(l.obs)}</div>` : ''}</td><td><span class="tag">${esc(l.categoria)}</span></td><td>${pagTxt(l)}</td><td class="n" style="font-weight:600">${val(l)}</td><td>${acts(l)}</td></tr>`).join('')}</tbody></table></div>
+      <div class="mob-only">${pgL.vis.map(l => `<div class="lcard"><div class="datebox"><b>${l.data.slice(8, 10)}</b><span>${MES_C[+l.data.slice(5, 7) - 1]}</span></div><div class="li-main"><div class="li-t">${esc(l.descricao)}</div><div class="li-s">${esc(l.categoria)} · ${esc(l.cartao && l.cartao !== '-' ? l.cartao : l.pagamento)}${nParc(l) > 1 ? (parcAtual(l) ? ` · ${parcAtual(l)}/${nParc(l)}` : ` · ${nParc(l)}x`) : ''}</div></div><div style="text-align:right"><div class="li-v">${val(l)}</div><div class="acts">${acts(l).replace('<div class="acts">', '').replace(/<\/div>$/, '')}</div></div></div>`).join('')}</div>${verMaisHTML('lanc', pgL)}`;
   }
 };
 function exportarCSV(lista) {
@@ -1390,7 +1438,11 @@ function processarImport() {
   txt.split(/\r?\n/).forEach(linha => {
     if (!linha.trim()) return;
     const c = linha.split('\t').map(s => s.trim());
-    const r = (c.length >= 4 && tipoLike(c[1])) ? { data: c[0], tipo: c[1], desc: c[2], valor: c[3], cat: c[4], pag: c[5], cartao: c[6], compra: c[7], parc: c[8] } : { data: c[0], desc: c[1], valor: c[2], cat: c[3] };
+    const r = (c.length >= 4 && tipoLike(c[1])) ? { data: c[0], tipo: c[1], desc: c[2], valor: c[3], cat: c[4], pag: c[5], cartao: c[6], compra: c[7], parc: c[8] }
+      : (c.length >= 4 && lerParcela(c[2]) && isFinite(parseNum(c[3]))) ? { data: c[0], desc: c[1], parc: c[2], valor: c[3], cat: c[4] }   // fatura: Data · Descrição · Parcela · Valor
+      : { data: c[0], desc: c[1], valor: c[2], cat: c[3] };
+    let pa = lerParcela(r.parc); const mDesc = String(r.desc || '').match(RE_PARC);
+    if (!pa && mDesc) { pa = lerParcela(`${mDesc[1]}/${mDesc[2]}`); if (pa) r.desc = r.desc.replace(RE_PARC, '').trim(); }
     const data = parseData(r.data); let valor = parseNum(r.valor);
     if (!data || !isFinite(valor) || !r.desc) { ignoradas++; return; }
     let tipo = r.tipo ? (/^(rec|entr)/i.test(r.tipo) ? 'Receita' : 'Despesa') : (valor < 0 ? 'Receita' : 'Despesa');
@@ -1400,20 +1452,21 @@ function processarImport() {
     const pagamento = acharLista(L.pagamentos, r.pag) || r.pag || IMP.pag;
     const cred = /cr[eé]dito/i.test(pagamento);
     const cartao = cred ? (acharLista(L.bancos, r.cartao) || (r.cartao && r.cartao !== '-' ? r.cartao : IMP.cartao)) : '-';
-    const parcelas = Math.max(1, parseInt(r.parc, 10) || 1);
+    const parcelas = pa ? pa.n : Math.max(1, parseInt(r.parc, 10) || 1);
     const dup = existentes.has(`${data}|${valor.toFixed(2)}|${norm(r.desc)}`);
-    novas.push({ sel: !dup, dup, data, tipo, descricao: r.desc, valor, categoria, pagamento, cartao, numParcelas: cred && (parcelas > 1 || /parcel/i.test(r.compra || '')) ? Math.max(2, parcelas) : 1 });
+    novas.push({ sel: !dup, dup, data, tipo, descricao: r.desc, valor, categoria, pagamento, cartao, parcelaAtual: cred && pa ? pa.x : 0, numParcelas: cred && (parcelas > 1 || /parcel/i.test(r.compra || '')) ? Math.max(2, parcelas) : 1 });
   });
   IMP.linhas.push(...novas); $('#impTxt').value = '';
   renderImportPrev();
   toast(`${novas.length} linha${novas.length !== 1 ? 's' : ''} reconhecida${novas.length !== 1 ? 's' : ''}${ignoradas ? ` · ${ignoradas} ignorada${ignoradas > 1 ? 's' : ''} (cabeçalho ou formato inválido)` : ''}`);
 }
+RERENDER.imp = () => renderImportPrev();
 function renderImportPrev() {
   const box = $('#impPrev'); if (!box) return;
   if (!IMP.linhas.length) { box.innerHTML = ''; return; }
-  const L = listas(), sel = IMP.linhas.filter(l => l.sel), dups = IMP.linhas.filter(l => l.dup).length;
-  box.innerHTML = `<div class="tbl-w" style="margin-top:12px"><table class="tbl imp-tbl" style="min-width:980px"><thead><tr><th class="c"><input type="checkbox" class="cb" id="impAll" ${sel.length === IMP.linhas.length ? 'checked' : ''}></th><th>Data</th><th>Tipo</th><th style="width:26%">Descrição</th><th>Valor</th><th>Categoria</th><th>Pagamento</th><th>Cartão</th><th>Parc.</th><th></th></tr></thead><tbody>
-    ${IMP.linhas.map((l, i) => `<tr class="${l.dup ? 'dup' : ''}" data-i="${i}">
+  const L = listas(), sel = IMP.linhas.filter(l => l.sel), dups = IMP.linhas.filter(l => l.dup).length, pgImp = paginar('imp', IMP.linhas);
+  box.innerHTML = `<div class="tbl-w" style="margin-top:12px"><table class="tbl imp-tbl" style="min-width:980px"><thead><tr><th class="c"><input type="checkbox" class="cb" id="impAll" ${sel.length === IMP.linhas.length ? 'checked' : ''}></th><th>Data</th><th>Tipo</th><th style="width:26%">Descrição</th><th>Valor</th><th>Categoria</th><th>Pagamento</th><th>Cartão</th><th title="3 = compra em 3x (valor total) · 05/10 = parcela 5 de 10 (valor da parcela)">Parcela</th><th></th></tr></thead><tbody>
+    ${pgImp.vis.map((l, i) => `<tr class="${l.dup ? 'dup' : ''}" data-i="${i}">
       <td class="c"><input type="checkbox" class="cb" data-f="sel" ${l.sel ? 'checked' : ''}></td>
       <td><input class="input" type="date" data-f="data" value="${l.data}" style="width:132px"></td>
       <td><select class="select" data-f="tipo" style="width:100px">${opcoes(['Despesa', 'Receita'], l.tipo)}</select></td>
@@ -1422,16 +1475,17 @@ function renderImportPrev() {
       <td><select class="select" data-f="categoria">${opcoes(L.categorias, l.categoria)}</select></td>
       <td><select class="select" data-f="pagamento">${opcoes(L.pagamentos, l.pagamento)}</select></td>
       <td><select class="select" data-f="cartao">${opcoes(['-', ...L.bancos], l.cartao)}</select></td>
-      <td><input class="input num" data-f="numParcelas" value="${l.numParcelas}" style="width:52px"></td>
+      <td><input class="input num" data-f="parc" value="${l.parcelaAtual ? `${pad2(l.parcelaAtual)}/${pad2(l.numParcelas)}` : l.numParcelas}" title="Ex.: 3 (compra em 3x, valor total) ou 05/10 (parcela 5 de 10, valor da parcela)" style="width:64px"></td>
       <td><button class="btn-icon danger" data-rm="${i}">${ic('x', 'ic-sm')}</button></td></tr>`).join('')}
-    </tbody></table></div>
+    </tbody></table></div>${verMaisHTML('imp', pgImp)}
     <div class="toolbar" style="margin-top:12px"><span class="small muted">${sel.length} de ${IMP.linhas.length} selecionadas · ${brl(sum(sel.map(l => l.tipo === 'Receita' ? -l.valor : l.valor)))} em saídas líquidas${dups ? ` · ${dups} possível${dups > 1 ? 'is' : ''} duplicado${dups > 1 ? 's' : ''} desmarcado${dups > 1 ? 's' : ''}` : ''}</span><div class="spacer"></div>
     <button class="btn btn-sm" id="impLimpar">Limpar</button><button class="btn btn-primary btn-sm" id="impSalvar" ${sel.length ? '' : 'disabled'}>Salvar ${sel.length} lançamento${sel.length !== 1 ? 's' : ''}</button></div>`;
   box.oninput = box.onchange = e => {
     const tr = e.target.closest('tr[data-i]'), f = e.target.dataset.f; if (!tr || !f) return;
     const l = IMP.linhas[+tr.dataset.i];
     if (f === 'sel') { l.sel = e.target.checked; if (e.type === 'change') renderImportPrev(); return; }
-    l[f] = f === 'valor' ? parseNum(e.target.value) : f === 'numParcelas' ? Math.max(1, parseInt(e.target.value, 10) || 1) : e.target.value;
+    if (f === 'parc') { const pa = lerParcela(e.target.value); if (pa) { l.parcelaAtual = pa.x; l.numParcelas = pa.n; } else { l.parcelaAtual = 0; l.numParcelas = Math.max(1, parseInt(e.target.value, 10) || 1); } return; }
+    l[f] = f === 'valor' ? parseNum(e.target.value) : e.target.value;
     if (f === 'pagamento' && e.type === 'change') { if (!ehCredito(l)) l.cartao = '-'; else if (l.cartao === '-') l.cartao = IMP.cartao; renderImportPrev(); }
   };
   $('#impAll').onchange = e => { IMP.linhas.forEach(l => l.sel = e.target.checked); renderImportPrev(); };
@@ -1443,7 +1497,9 @@ function renderImportPrev() {
     if (inval >= 0) return toast(`Linha ${IMP.linhas.indexOf(lin[inval]) + 1}: confira data, descrição e valor.`, 'erro');
     const b = $('#impSalvar'); b.disabled = true; b.textContent = 'Salvando…';
     try {
-      await api.addMany(COL.lancamentos, lin.map(l => { const cred = ehCredito(l) && l.cartao !== '-'; return { data: l.data, tipo: l.tipo, descricao: l.descricao, valor: Math.round(l.valor * 100) / 100, categoria: l.categoria, pagamento: l.pagamento, cartao: cred ? l.cartao : '-', tipoCompra: cred && l.numParcelas > 1 ? 'Parcelada' : 'À vista', numParcelas: cred ? l.numParcelas : 1 }; }));
+      await api.addMany(COL.lancamentos, lin.map(l => { const cred = ehCredito(l) && l.cartao !== '-', parc = cred && l.numParcelas > 1;
+        const d = { data: l.data, tipo: l.tipo, descricao: l.descricao, valor: Math.round(l.valor * 100) / 100, categoria: l.categoria, pagamento: l.pagamento, cartao: cred ? l.cartao : '-', tipoCompra: parc ? 'Parcelada' : 'À vista', numParcelas: parc ? l.numParcelas : 1 };
+        if (parc && l.parcelaAtual) d.parcelaAtual = l.parcelaAtual; return d; }));
       if (IMP.origem && !C().importados.includes(IMP.origem)) { C().importados.push(IMP.origem); salvarConfig({ render: false }); }
       IMP.linhas = IMP.linhas.filter(l => !l.sel); toast(`${lin.length} lançamento${lin.length > 1 ? 's' : ''} importado${lin.length > 1 ? 's' : ''}`);
       if (!IMP.linhas.length) IMP.aberto = false; renderImport();
@@ -1509,16 +1565,28 @@ VIEWS.cartoes = {
   soMes: true,
   sub: () => `Faturas com vencimento em ${rotMesLongo(mesRef()).toLowerCase()}`,
   novo: { txt: 'Novo lançamento', fn: () => formLancamento({ pagamento: listas().pagamentos.find(p => /cr[eé]dito/i.test(p)) || listas().pagamentos[0] }) },
-  shell: () => `<div class="grid g-3" id="cCards"></div>
+  shell: () => `<div id="cConv"></div><div class="grid g-3" id="cCards"></div>
     <section class="card"><div class="card-h"><div><h3>Comprometimento futuro</h3><p>Valor que já está garantido em cada fatura pelos parcelamentos</p></div></div><div class="tbl-w" id="cMat"></div></section>
     <section class="card"><div class="card-h"><div><h3>Parcelamentos</h3><p id="cParcSub"></p></div><div class="seg" id="cSeg"><button data-f="0" class="${CART_FIM ? '' : 'on'}">Ativos</button><button data-f="1" class="${CART_FIM ? 'on' : ''}">Todos</button></div></div><div class="tbl-w" id="cParc"></div></section>`,
   bind(el) {
     on(el, 'click', '[data-cfg]', b => formCartao(b.dataset.cfg));
+    on(el, 'click', '#cConvBtn', async b => {
+      const alvo = paraConverter(); if (!alvo.length) return;
+      b.disabled = true; b.textContent = 'Convertendo…';
+      try {
+        await api.updateMany(COL.lancamentos, alvo.map(({ l, x, n }) => [l.id, { descricao: l.descricao.replace(RE_PARC, '').trim(), parcelaAtual: x, numParcelas: n, tipoCompra: 'Parcelada' }]));
+        toast(`${alvo.length} lançamento${alvo.length > 1 ? 's' : ''} convertido${alvo.length > 1 ? 's' : ''} em parcelamento`);
+      } catch (e) { toast('Erro. ' + msgErro(e), 'erro'); b.disabled = false; b.textContent = 'Converter'; }
+    });
     on(el, 'click', '#cNovoCartao', () => formCartao());
     on(el, 'click', '#cSeg button', b => { CART_FIM = b.dataset.f === '1'; $$('#cSeg button').forEach(x => x.classList.toggle('on', x === b)); this.update(); });
     on(el, 'click', '[data-act]', b => { const l = D().lancamentos.find(x => x.id === b.dataset.id); if (!l) return; if (b.dataset.act === 'edit') formLancamento(l); if (b.dataset.act === 'del') excluirComDesfazer('lancamentos', l, 'Compra excluída'); });
   },
   update() {
+    const conv = paraConverter();
+    $('#cConv').innerHTML = conv.length ? `<div class="panel" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--warn-weak);border-color:#f3dcb4">
+      <div style="flex:1;min-width:220px"><h4>${conv.length} lançamento${conv.length > 1 ? 's têm' : ' tem'} a parcela só no nome</h4><p>Ex.: ${esc(conv[0].l.descricao)}. Converta para que entrem no controle de parcelamentos e na previsão das próximas faturas.</p></div>
+      <button class="btn btn-primary btn-sm" id="cConvBtn">Converter</button></div>` : '';
     const k = mesRef(), atual = mesHoje(), fat = faturas(), cards = cartoesAtivos();
     $('#cCards').innerHTML = cards.map(c => {
       const cfg = C().cartoes[c] || {}, f = fat[c] || {}, v = f[k] || 0, prox = f[addMes(k, 1)] || 0;
@@ -1536,17 +1604,22 @@ VIEWS.cartoes = {
     $('#cMat').innerHTML = linhas.length ? `<table class="tbl"><thead><tr><th>Cartão</th>${meses.map(m => `<th class="n">${rotMes(m)}</th>`).join('')}</tr></thead><tbody>${linhas.map(c => `<tr><td style="font-weight:500">${esc(c)}</td>${meses.map(m => `<td class="n">${fat[c]?.[m] ? brl(fat[c][m]) : '<span class="faint">—</span>'}</td>`).join('')}</tr>`).join('')}</tbody>
       <tfoot><tr><td>Total</td>${meses.map(m => `<td class="n">${brl(sum(linhas.map(c => fat[c]?.[m] || 0)))}</td>`).join('')}</tr></tfoot></table>` : vazioHTML('Nada comprometido', 'Nenhuma compra no cartão para os próximos meses.');
 
-    const parc = comprasCartao().filter(l => nParc(l) > 1).map(l => { const ps = parcelasDe(l); const pagas = ps.filter(p => p.k < atual).length; return { l, ps, pagas, rest: sum(ps.filter(p => p.k >= atual).map(p => p.v)), fim: ps[ps.length - 1].k }; })
+    const parc = parcelamentos().map(g => { const l = g.ult, ps = parcelasDe(l), n = nParc(l), antes = parcAtual(l) ? parcAtual(l) - 1 : 0; const pagas = antes + ps.filter(p => p.k < atual).length; return { l, ps, n, pagas, rest: sum(ps.filter(p => p.k >= atual).map(p => p.v)), fim: ps[ps.length - 1].k }; })
       .filter(x => CART_FIM || x.fim >= atual).sort((a, b) => b.l.data.localeCompare(a.l.data));
     const ativos = parc.filter(x => x.fim >= atual);
     $('#cParcSub').textContent = `${ativos.length} ativo${ativos.length !== 1 ? 's' : ''} · ${brl(sum(ativos.map(x => x.rest)))} a pagar (incluindo a fatura de ${rotMes(atual)})`;
-    $('#cParc').innerHTML = parc.length ? `<table class="tbl"><thead><tr><th>Compra</th><th>Cartão</th><th>Progresso</th><th class="n">Parcela</th><th class="n">Restante</th><th>Termina</th><th></th></tr></thead><tbody>${parc.map(x => `<tr>
-      <td><div style="font-weight:500">${esc(x.l.descricao)}</div><div class="sub">${fmtData(x.l.data)} · total ${brl(x.l.valor)}</div></td><td>${esc(x.l.cartao)}</td>
-      <td style="min-width:130px"><div class="small muted" style="margin-bottom:4px">${x.pagas}/${x.ps.length} pagas</div><div class="bar"><i style="width:${x.pagas / x.ps.length * 100}%"></i></div></td>
+    const pgP = paginar('parc', parc);
+    $('#cParc').innerHTML = parc.length ? `<table class="tbl"><thead><tr><th>Compra</th><th>Cartão</th><th>Progresso</th><th class="n">Parcela</th><th class="n">Restante</th><th>Termina</th><th></th></tr></thead><tbody>${pgP.vis.map(x => `<tr>
+      <td><div style="font-weight:500">${esc(String(x.l.descricao || '').replace(RE_PARC, ''))}</div><div class="sub">${parcAtual(x.l) ? `parcela ${parcAtual(x.l)}/${x.n} lançada em ${fmtData(x.l.data)}` : `${fmtData(x.l.data)} · total ${brl(valorParcela(x.l) * x.n)}`}</div></td><td>${esc(x.l.cartao)}</td>
+      <td style="min-width:130px"><div class="small muted" style="margin-bottom:4px">${x.pagas}/${x.n} pagas</div><div class="bar"><i style="width:${x.pagas / x.n * 100}%"></i></div></td>
       <td class="n">${brl(x.ps[0].v)}</td><td class="n" style="font-weight:600">${x.rest ? brl(x.rest) : '<span class="badge pos">Quitado</span>'}</td><td class="muted">${rotMes(x.fim)}</td>
-      <td><div class="acts"><button class="btn-icon" data-act="edit" data-id="${x.l.id}">${ic('edit', 'ic-sm')}</button><button class="btn-icon danger" data-act="del" data-id="${x.l.id}">${ic('trash', 'ic-sm')}</button></div></td></tr>`).join('')}</tbody></table>` : vazioHTML('Nenhum parcelamento', 'Compras parceladas no crédito aparecem aqui automaticamente.');
+      <td><div class="acts"><button class="btn-icon" data-act="edit" data-id="${x.l.id}">${ic('edit', 'ic-sm')}</button><button class="btn-icon danger" data-act="del" data-id="${x.l.id}">${ic('trash', 'ic-sm')}</button></div></td></tr>`).join('')}</tbody></table>${verMaisHTML('parc', pgP)}` : vazioHTML('Nenhum parcelamento', 'Compras parceladas no crédito aparecem aqui automaticamente.');
   }
 };
+
+function paraConverter() {
+  return comprasCartao().filter(l => nParc(l) < 2).map(l => { const m = String(l.descricao || '').match(RE_PARC); if (!m) return null; const x = +m[1], n = +m[2]; return n >= 2 && x >= 1 && x <= n ? { l, x, n } : null; }).filter(Boolean);
+}
 
 /* ---------- 5. Orçamento anual ---------- */
 const ORC_ABERTOS = new Set();
@@ -1639,7 +1712,8 @@ VIEWS.investimentos = {
     const at = Object.entries(porAtv).filter(x => x[1] > 0.005).sort((a, b) => b[1] - a[1]);
     if (vazioGrafico('cAtv', at.length ? '' : 'Sem patrimônio registrado')) barrasH('cAtv', at.map(x => x[0]), at.map(x => x[1]));
     const lst = [...per].sort((a, b) => (b.data || '').localeCompare(a.data || ''));
-    $('#iT').innerHTML = lst.length ? `<table class="tbl"><thead><tr><th>Data</th><th>Tipo</th><th>Ativo</th><th class="n">Valor</th><th></th></tr></thead><tbody>${lst.map(i => `<tr><td class="muted num">${fmtData(i.data)}</td><td><span class="badge ${i.tipo === 'Resgate' ? 'neg' : i.tipo === 'Rendimento' ? 'info' : 'pos'}">${esc(i.tipo)}</span></td><td><div style="font-weight:500">${esc(i.ativo)}</div>${i.obs ? `<div class="sub">${esc(i.obs)}</div>` : ''}</td><td class="n" style="font-weight:600">${i.tipo === 'Resgate' ? '− ' : '+ '}${brl(i.valor)}${+i.rendimento ? `<div class="sub pos">+ ${brl(i.rendimento)} rend.</div>` : ''}</td><td><div class="acts"><button class="btn-icon" data-act="edit" data-id="${i.id}">${ic('edit', 'ic-sm')}</button><button class="btn-icon danger" data-act="del" data-id="${i.id}">${ic('trash', 'ic-sm')}</button></div></td></tr>`).join('')}</tbody></table>` : vazioHTML('Nenhuma movimentação no período', 'Registre aportes, rendimentos e resgates.');
+    const pgI = paginar('inv', lst);
+    $('#iT').innerHTML = lst.length ? `<table class="tbl"><thead><tr><th>Data</th><th>Tipo</th><th>Ativo</th><th class="n">Valor</th><th></th></tr></thead><tbody>${pgI.vis.map(i => `<tr><td class="muted num">${fmtData(i.data)}</td><td><span class="badge ${i.tipo === 'Resgate' ? 'neg' : i.tipo === 'Rendimento' ? 'info' : 'pos'}">${esc(i.tipo)}</span></td><td><div style="font-weight:500">${esc(i.ativo)}</div>${i.obs ? `<div class="sub">${esc(i.obs)}</div>` : ''}</td><td class="n" style="font-weight:600">${i.tipo === 'Resgate' ? '− ' : '+ '}${brl(i.valor)}${+i.rendimento ? `<div class="sub pos">+ ${brl(i.rendimento)} rend.</div>` : ''}</td><td><div class="acts"><button class="btn-icon" data-act="edit" data-id="${i.id}">${ic('edit', 'ic-sm')}</button><button class="btn-icon danger" data-act="del" data-id="${i.id}">${ic('trash', 'ic-sm')}</button></div></td></tr>`).join('')}</tbody></table>${verMaisHTML('inv', pgI)}` : vazioHTML('Nenhuma movimentação no período', 'Registre aportes, rendimentos e resgates.');
   }
 };
 
@@ -1761,7 +1835,7 @@ VIEWS.mercado = {
     on(el, 'click', '#mkJ button', b => { MST.janela = +b.dataset.j; $$('#mkJ button').forEach(x => x.classList.toggle('on', x === b)); this.update(); });
     $('#mkMet').onchange = e => { MST.metrica = e.target.value; this.update(); };
     $('#mkOrd').onchange = e => { MST.ordem = e.target.value; this.update(); };
-    $('#mkBusca').oninput = e => { MST.busca = e.target.value; this.update(); };
+    $('#mkBusca').oninput = e => { MST.busca = e.target.value; delete LIM.comp; this.update(); };
     $('#mkProd').onchange = e => { MST.prod = e.target.value; this.precoChart(); };
     $('#mkImp').onclick = () => { IMPM.aberto = !IMPM.aberto; renderImportMerc(); };
     on(el, 'click', '[data-act]', b => { const m = D().mercado.find(x => x.id === b.dataset.id); if (!m) return; if (b.dataset.act === 'edit') formMercado(m); else excluirComDesfazer('mercado', m, 'Item excluído'); });
@@ -1819,7 +1893,8 @@ VIEWS.mercado = {
     let rows = Object.keys(r).filter(k => ms.some(m => r[k][m]) && (!bq || norm(nomes[k]).includes(bq))).map(k => { const a = val(k, ant), b = val(k, ref); return { k, vs: ms.map(m => val(k, m)), d: a && b ? b / a - 1 : null }; });
     const o = MST.ordem;
     rows.sort((a, b) => o === 'nome' ? nomes[a.k].localeCompare(nomes[b.k]) : o === 'alta' ? (b.d ?? -9) - (a.d ?? -9) : o === 'queda' ? (a.d ?? 9) - (b.d ?? 9) : (b.vs[2] ?? 0) - (a.vs[2] ?? 0));
-    $('#mkComp').innerHTML = rows.length ? `<table class="tbl"><thead><tr><th>Produto</th>${ms.map(m => `<th class="n">${rotMes(m)}</th>`).join('')}<th class="n">Variação</th></tr></thead><tbody>${rows.slice(0, 80).map(x => `<tr><td><button data-prod="${esc(x.k)}" style="border:0;background:none;padding:0;font-weight:500;text-align:left">${esc(nomes[x.k])}</button></td>${x.vs.map(v => `<td class="n">${fmt(v)}</td>`).join('')}<td class="n">${x.d === null ? '<span class="faint">—</span>' : `<span class="badge ${x.d > 0.005 ? (met === 'qtd' ? 'info' : 'neg') : x.d < -0.005 ? (met === 'qtd' ? '' : 'pos') : ''}">${x.d > 0 ? '+' : ''}${pct(x.d, 1)}</span>`}</td></tr>`).join('')}</tbody></table>${rows.length > 80 ? `<p class="small muted">Mostrando 80 de ${rows.length}. Use a busca para filtrar.</p>` : ''}` : vazioHTML('Nenhum produto', 'Sem compras nos últimos 3 meses.');
+    const pgC = paginar('comp', rows);
+    $('#mkComp').innerHTML = rows.length ? `<table class="tbl"><thead><tr><th>Produto</th>${ms.map(m => `<th class="n">${rotMes(m)}</th>`).join('')}<th class="n">Variação</th></tr></thead><tbody>${pgC.vis.map(x => `<tr><td><button data-prod="${esc(x.k)}" style="border:0;background:none;padding:0;font-weight:500;text-align:left">${esc(nomes[x.k])}</button></td>${x.vs.map(v => `<td class="n">${fmt(v)}</td>`).join('')}<td class="n">${x.d === null ? '<span class="faint">—</span>' : `<span class="badge ${x.d > 0.005 ? (met === 'qtd' ? 'info' : 'neg') : x.d < -0.005 ? (met === 'qtd' ? '' : 'pos') : ''}">${x.d > 0 ? '+' : ''}${pct(x.d, 1)}</span>`}</td></tr>`).join('')}</tbody></table>${verMaisHTML('comp', pgC)}` : vazioHTML('Nenhum produto', 'Sem compras nos últimos 3 meses.');
 
     // seletor de produto
     const prods = Object.keys(r).sort((a, b) => nomes[a].localeCompare(nomes[b]));
@@ -1829,7 +1904,8 @@ VIEWS.mercado = {
 
     const lst = [...noPer].sort((a, b) => (b.data || '').localeCompare(a.data || ''));
     $('#mkItSub').textContent = `${lst.length} ite${lst.length === 1 ? 'm' : 'ns'} · ${brl(gasto)}`;
-    $('#mkIt').innerHTML = lst.length ? `<table class="tbl"><thead><tr><th>Data</th><th>Produto</th><th class="n">Qtd</th><th class="n">Unitário</th><th class="n">Total</th><th></th></tr></thead><tbody>${lst.slice(0, 300).map(m => `<tr><td class="muted num">${fmtData(m.data)}</td><td><div style="font-weight:500">${esc(m.produto)}</div>${m.codigo ? `<div class="sub">${esc(m.codigo)}</div>` : ''}</td><td class="n">${qtdBR(m.qtd)} ${esc(m.unidade || '')}</td><td class="n">${brl(m.valor)}</td><td class="n" style="font-weight:600">${brl(totalMerc(m))}</td><td><div class="acts"><button class="btn-icon" data-act="edit" data-id="${m.id}">${ic('edit', 'ic-sm')}</button><button class="btn-icon danger" data-act="del" data-id="${m.id}">${ic('trash', 'ic-sm')}</button></div></td></tr>`).join('')}</tbody></table>` : vazioHTML('Sem itens no período', 'Lance as compras ou importe do Excel.');
+    const pgM = paginar('merc', lst);
+    $('#mkIt').innerHTML = lst.length ? `<table class="tbl"><thead><tr><th>Data</th><th>Produto</th><th class="n">Qtd</th><th class="n">Unitário</th><th class="n">Total</th><th></th></tr></thead><tbody>${pgM.vis.map(m => `<tr><td class="muted num">${fmtData(m.data)}</td><td><div style="font-weight:500">${esc(m.produto)}</div>${m.codigo ? `<div class="sub">${esc(m.codigo)}</div>` : ''}</td><td class="n">${qtdBR(m.qtd)} ${esc(m.unidade || '')}</td><td class="n">${brl(m.valor)}</td><td class="n" style="font-weight:600">${brl(totalMerc(m))}</td><td><div class="acts"><button class="btn-icon" data-act="edit" data-id="${m.id}">${ic('edit', 'ic-sm')}</button><button class="btn-icon danger" data-act="del" data-id="${m.id}">${ic('trash', 'ic-sm')}</button></div></td></tr>`).join('')}</tbody></table>${verMaisHTML('merc', pgM)}` : vazioHTML('Sem itens no período', 'Lance as compras ou importe do Excel.');
   },
   precoChart() {
     const k = MST.prod, o = this._r?.[k]; if (!vazioGrafico('cMkP', o ? '' : 'Sem produtos')) return;
@@ -1914,7 +1990,8 @@ VIEWS.config = {
   shell: () => `<div class="grid g-2">${LISTAS_CFG.map(l => `<section class="card" data-lista="${l.k}"><div class="card-h"><h3>${l.t}</h3><span class="small muted" data-cnt></span></div>
       <form class="toolbar" data-add><input class="input" style="flex:1" placeholder="Adicionar…" maxlength="60"><button class="btn btn-primary" type="submit">${ic('plus', 'ic-sm')}Adicionar</button></form><div class="chips" data-chips></div></section>`).join('')}</div>
     <section class="card"><div class="card-h"><div><h3>Preferências</h3></div></div>
-      <div class="field" style="max-width:520px"><label>Compras parceladas no resumo mensal</label><select class="select" id="cfParc">${opcoes([{ v: 'compra', t: 'Valor total no mês da compra (padrão)' }, { v: 'parcela', t: 'Distribuir as parcelas pelos meses' }], C().prefs.parcelas)}</select><span class="hint">Afeta Visão geral, Lançamentos por mês e Planejado x Realizado. A aba Cartões sempre mostra parcelas por fatura.</span></div></section>
+      <div class="field" style="max-width:520px"><label>Compras parceladas no resumo mensal</label><select class="select" id="cfParc">${opcoes([{ v: 'compra', t: 'Valor total no mês da compra (padrão)' }, { v: 'parcela', t: 'Distribuir as parcelas pelos meses' }], C().prefs.parcelas)}</select><span class="hint">Afeta Visão geral, Lançamentos por mês e Planejado x Realizado. A aba Cartões sempre mostra parcelas por fatura.</span></div>
+      <div class="field" style="max-width:520px;margin-top:16px"><label>Em compras parceladas lançadas sem "parcela desta fatura", o valor informado é</label><select class="select" id="cfValParc">${opcoes([{ v: 'total', t: 'O valor total da compra' }, { v: 'parcela', t: 'O valor de cada parcela' }], C().prefs.valorParcelado)}</select><span class="hint">Use "valor de cada parcela" se vocês costumavam lançar o valor da parcela com o número de parcelas. Lançamentos com "parcela desta fatura" (ex.: 05/10) sempre usam o valor da parcela.</span></div></section>
     <section class="card"><div class="card-h"><div><h3>Backup e dados</h3><p>Exporte uma cópia de tudo antes de grandes mudanças.</p></div></div>
       <div class="toolbar"><button class="btn" id="cfJson">${ic('download', 'ic-sm')}Backup completo (JSON)</button><button class="btn" id="cfCsv">${ic('download', 'ic-sm')}Todos os lançamentos (CSV)</button></div>
       <p class="small muted" id="cfInfo" style="margin:12px 0 0"></p></section>
@@ -1968,6 +2045,7 @@ service cloud.firestore {
 }</pre></div>`;
       b.disabled = false; b.textContent = 'Testar novamente';
     };
+    $('#cfValParc').onchange = e => { C().prefs.valorParcelado = e.target.value; salvarConfig(); toast('Preferência salva'); };
     $('#cfParc').onchange = e => { C().prefs.parcelas = e.target.value; salvarConfig(); toast('Preferência salva'); };
     $('#cfJson').onclick = () => baixar(`backup-financas-${hojeISO()}.json`, JSON.stringify({ geradoEm: new Date().toISOString(), config: C(), dados: D() }, null, 2), 'application/json');
     $('#cfCsv').onclick = () => exportarCSV([...D().lancamentos].sort((a, b) => (a.data || '').localeCompare(b.data || '')));
@@ -2027,6 +2105,7 @@ function demoDados() {
 /* =====================================================================
    INICIALIZAÇÃO
    ===================================================================== */
+if (DEMO) window.__app = { paraConverter, comprasCartao, D };
 montarNav();
 irPara(S.aba);
 (async () => {
